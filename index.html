@@ -1932,18 +1932,137 @@
 <!-- 공유 섹션 -->
 <div style="background:#0a0a0a; border:1px solid rgba(201,168,76,0.2); padding:40px 20px; margin:40px 0; text-align:center;">
   <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.35em; color:var(--gold); margin-bottom:12px;">SHARE</div>
-  <h3 style="font-size:clamp(18px,3vw,24px); font-weight:700; margin-bottom:8px;">공유하면 선정 확률 UP</h3>
-  <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.4); margin-bottom:24px; line-height:1.7;">
-    인스타 스토리·쓰레드에 올리면 가산점!<br>
-    아래 버튼으로 링크를 공유해주세요.
+  <h3 style="font-size:clamp(18px,3vw,24px); font-weight:700; margin-bottom:12px;">공유하면 선정 확률 UP</h3>
+  <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.5); margin-bottom:6px; line-height:1.7;">
+    인스타 스토리·쓰레드에 올리면 가산점!
   </p>
+  <p style="font-family:var(--sans); font-size:12px; color:var(--gold); margin-bottom:28px; line-height:1.7;">
+    ✦ 동일 조건이면 공유한 분을 우선 선정합니다
+  </p>
+
+  <!-- 스토리 카드 미리보기 -->
+  <div style="margin:0 auto 28px; max-width:240px;">
+    <canvas id="shareCard" width="540" height="960" style="width:100%; border:1px solid #333; display:block;"></canvas>
+  </div>
+
   <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-    <button onclick="copyLink()" style="background:var(--gold); color:var(--black); font-family:var(--serif); font-size:14px; font-weight:700; padding:14px 28px; border:none; cursor:pointer; letter-spacing:0.05em; transition:all 0.2s;">
+    <button onclick="downloadCard()" style="background:var(--gold); color:var(--black); font-family:var(--serif); font-size:14px; font-weight:700; padding:14px 28px; border:none; cursor:pointer; letter-spacing:0.05em;">
+      📥 스토리 카드 저장
+    </button>
+    <button onclick="copyLink()" style="background:transparent; color:var(--white); font-family:var(--serif); font-size:14px; font-weight:700; padding:14px 28px; border:1px solid #444; cursor:pointer; letter-spacing:0.05em;">
       🔗 링크 복사
     </button>
   </div>
   <p id="copyMsg" style="font-family:var(--sans); font-size:12px; color:var(--gold); margin-top:12px; display:none;">링크가 복사되었습니다!</p>
 </div>
+
+<script>
+// 스토리 카드 생성
+function drawShareCard() {
+  const canvas = document.getElementById('shareCard');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = 540, H = 960;
+
+  // 배경
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, W, H);
+
+  // 배경 이미지 로드
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = function() {
+    ctx.globalAlpha = 0.3;
+    ctx.drawImage(img, 0, 0, W, H);
+    ctx.globalAlpha = 1;
+    drawText(ctx, W, H);
+  };
+  img.onerror = function() {
+    drawText(ctx, W, H);
+  };
+  img.src = 'https://cdn.imweb.me/upload/S20190812210f44b44bcb0/8174fe767390b.jpg';
+}
+
+function drawText(ctx, W, H) {
+  // 골드 수직선
+  ctx.fillStyle = '#c9a84c';
+  ctx.fillRect(W/2 - 1, 80, 2, H - 160);
+
+  // SEASON
+  ctx.fillStyle = 'rgba(201,168,76,0.7)';
+  ctx.font = '500 22px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('SEASON 01 · 화진편', W/2, 120);
+
+  // 흑백 체험단
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 96px sans-serif';
+  ctx.fillText('흑백', W/2, 260);
+  ctx.fillStyle = '#c9a84c';
+  ctx.fillText('체험단', W/2, 370);
+
+  // 구분선
+  ctx.strokeStyle = 'rgba(201,168,76,0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(W/2 - 80, 410);
+  ctx.lineTo(W/2 + 80, 410);
+  ctx.stroke();
+
+  // 메인 카피
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 38px sans-serif';
+  ctx.font = '400 26px sans-serif';
+  ctx.fillStyle = 'rgba(240,237,232,0.7)';
+  ctx.fillText('오로지 콘텐츠와 실력으로 승부하는', W/2, 470);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 64px sans-serif';
+  ctx.fillText('흑백 체험단', W/2, 550);
+  ctx.fillStyle = '#c9a84c';
+  ctx.font = '500 28px sans-serif';
+  ctx.fillText('슬로우오션 × 아우로라', W/2, 600);
+  ctx.fillText('인플루언서 모집중', W/2, 638);
+
+  // 서브
+  ctx.fillStyle = 'rgba(240,237,232,0.5)';
+  ctx.font = '300 22px sans-serif';
+  ctx.fillText('팔로워가 아닌 콘텐츠로 승부한다', W/2, 690);
+
+  // 구분선
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.beginPath();
+  ctx.moveTo(W/2 - 100, 710);
+  ctx.lineTo(W/2 + 100, 710);
+  ctx.stroke();
+
+  // 계정
+  ctx.fillStyle = '#c9a84c';
+  ctx.font = '500 26px sans-serif';
+  ctx.fillText('@slowocean60', W/2, 760);
+
+  // 마감
+  ctx.fillStyle = 'rgba(240,237,232,0.4)';
+  ctx.font = '300 22px sans-serif';
+  ctx.fillText('지원 마감 · 4월 19일', W/2, 820);
+
+  // 하단 바
+  ctx.fillStyle = '#c9a84c';
+  ctx.fillRect(0, H - 60, W, 60);
+  ctx.fillStyle = '#080808';
+  ctx.font = '700 22px sans-serif';
+  ctx.fillText('ptinsight8-tech.github.io/slow', W/2, H - 25);
+}
+
+window.addEventListener('load', drawShareCard);
+
+function downloadCard() {
+  const canvas = document.getElementById('shareCard');
+  const link = document.createElement('a');
+  link.download = '흑백체험단_스토리카드.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+</script>
 
     <!-- 완료 화면 -->
     <div class="submit-done" id="submitDone">
