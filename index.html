@@ -1136,7 +1136,7 @@
 
   <div class="hero-content">
     <h1 style="font-family:var(--sans); font-size:clamp(48px,12vw,120px); font-weight:900; line-height:0.9; letter-spacing:-0.04em; margin-bottom:16px; margin-top:80px; color:var(--white); text-transform:none;">흑백<br><span style="color:var(--gold); -webkit-text-stroke:1px var(--gold);">체험단</span></h1>
-    <p style="font-family:var(--sans); font-size:11px; letter-spacing:0.4em; color:rgba(201,168,76,0.6); margin-bottom:32px;">SEASON 01 · 화진편</p>
+    <p style="font-family:var(--sans); font-size:11px; letter-spacing:0.4em; color:rgba(201,168,76,0.6); margin-bottom:32px;">SEASON 01 · 화진편 → 7번 국도편 → 전국편</p>
 
     <!-- hero-title hidden -->
 
@@ -1261,6 +1261,80 @@
   </div>
 </div>
 
+<!-- 실시간 지원자 -->
+<div style="background:#000; padding:32px 20px; border-top:1px solid #1a1a1a; border-bottom:1px solid #1a1a1a; overflow:hidden;">
+  <div style="max-width:700px; margin:0 auto; display:flex; align-items:center; gap:20px;">
+    <span style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); white-space:nowrap; flex-shrink:0;">LIVE</span>
+    <div style="width:8px; height:8px; background:#ff4444; border-radius:50%; flex-shrink:0; animation:blink 1s ease infinite;"></div>
+    <div style="overflow:hidden; flex:1; height:24px; position:relative;">
+      <div id="liveScroll" style="position:absolute; width:100%; transition:transform 0.5s ease;"></div>
+    </div>
+  </div>
+</div>
+<style>
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+</style>
+
+
+<!-- 실시간 지원자 알림 -->
+<div style="background:#000; padding:20px; overflow:hidden; border-top:1px solid #1a1a1a; border-bottom:1px solid #1a1a1a;">
+  <div style="display:flex; align-items:center; gap:16px; max-width:900px; margin:0 auto;">
+    <span style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); white-space:nowrap; flex-shrink:0;">LIVE</span>
+    <div style="width:6px; height:6px; border-radius:50%; background:#ff4444; flex-shrink:0; animation:livePulse 1s ease infinite;"></div>
+    <div id="liveScroll" style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.7); white-space:nowrap; overflow:hidden; flex:1;"></div>
+  </div>
+</div>
+
+<style>
+@keyframes livePulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+@keyframes slideIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+</style>
+
+<script>
+const SHEET_ID = '1OEM15tjwUmVWod6KVrfBziKsNs4diz5mZNytLV1BM2Y';
+const CSV_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent('https://docs.google.com/spreadsheets/d/1OEM15tjwUmVWod6KVrfBziKsNs4diz5mZNytLV1BM2Y/export?format=csv&gid=0')}`;
+
+let applicants = [];
+let liveIndex = 0;
+
+async function fetchApplicants() {
+  try {
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('fetch fail');
+    const text = await res.text();
+    const rows = text.split('\n').slice(1).filter(r => r.trim());
+    applicants = rows.map(r => {
+      const cols = r.split(',');
+      return cols[3] ? cols[3].replace(/"/g, '').trim() : null;
+    }).filter(Boolean);
+    updateLiveScroll();
+    updateMosaic();
+  } catch(e) {
+    console.log('시트 연동 오류:', e);
+  }
+}
+
+function updateLiveScroll() {
+  if (!applicants.length) return;
+  const el = document.getElementById('liveScroll');
+  if (!el) return;
+  const nick = applicants[liveIndex % applicants.length];
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = 'slideIn 0.5s ease forwards';
+  el.innerHTML = `<span style="color:var(--gold);">@${nick}</span> 님이 흑백체험단에 지원했습니다`;
+  liveIndex++;
+  setTimeout(updateLiveScroll, 3000);
+}
+
+function updateMosaic() {
+  // 백팀/흑팀 분류는 cols[1] 기준
+}
+
+fetchApplicants();
+setInterval(fetchApplicants, 30000);
+</script>
+
 <!-- 모자이크 명단 -->
 <div style="background:#000; padding:60px 20px; border-bottom:1px solid #1a1a1a;">
   <div style="max-width:900px; margin:0 auto; text-align:center;">
@@ -1336,6 +1410,134 @@
   </div>
 </div>
 
+
+
+<!-- 이 체험단이 다른 이유 + 지원 대상 -->
+<div style="background:#0a0a0a; padding:100px 20px;">
+  <div style="max-width:1000px; margin:0 auto;">
+
+    <!-- B) 이 체험단이 다른 이유 -->
+    <span style="font-family:var(--sans); font-size:10px; letter-spacing:0.4em; color:var(--gold); display:block; margin-bottom:20px;">WHY THIS WORKS</span>
+    <h2 style="font-size:clamp(28px,5vw,48px); font-weight:700; margin-bottom:12px;">이 체험단이 다른 이유</h2>
+    <div style="width:60px; height:1px; background:linear-gradient(90deg,#3D7C8E,var(--gold)); margin-bottom:60px;"></div>
+
+
+    <!-- 수상 실적 배너 -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2px; margin-bottom:60px;">
+      <div style="background:#111; padding:28px 20px; text-align:center; border-top:2px solid var(--gold);">
+        <div style="font-size:28px; font-weight:900; color:var(--gold); margin-bottom:8px;">100만 · 200만 · 400만</div>
+        <div style="font-family:var(--sans); font-size:12px; color:rgba(240,237,232,0.5); line-height:1.6;">이 공간에서 탄생한<br>실제 릴스 조회수</div>
+      </div>
+      <div style="background:#111; padding:28px 20px; text-align:center; border-top:2px solid #3D7C8E;">
+        <div style="font-size:18px; font-weight:900; color:var(--white); margin-bottom:8px;">1박2일 · 같이삽시다</div>
+        <div style="font-family:var(--sans); font-size:12px; color:rgba(240,237,232,0.5); line-height:1.6;">수많은 방송사가<br>직접 찾아온 숙소</div>
+      </div>
+      <div style="background:#111; padding:28px 20px; text-align:center; border-top:2px solid var(--gold);">
+        <div style="font-size:18px; font-weight:900; color:var(--white); margin-bottom:8px;">야놀자 전국 1위</div>
+        <div style="font-family:var(--sans); font-size:12px; color:rgba(240,237,232,0.5); line-height:1.6;">2022 · 2025년<br>전국 예약율 1등</div>
+      </div>
+      <div style="background:#111; padding:28px 20px; text-align:center; border-top:2px solid #3D7C8E;">
+        <div style="font-size:18px; font-weight:900; color:var(--white); margin-bottom:8px;">데일리호텔 선정</div>
+        <div style="font-family:var(--sans); font-size:12px; color:rgba(240,237,232,0.5); line-height:1.6;">올해의 풀빌라<br>공식 선정</div>
+      </div>
+    </div>
+
+    <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.35); text-align:center; margin-bottom:80px; line-height:1.8;">
+      이미 검증된 공간입니다. 당신의 시선으로 담으면, 또 터집니다.
+    </p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2px; margin-bottom:100px;">
+
+      <div style="background:var(--gray-dark); padding:36px 28px; border-left:3px solid var(--gold);">
+        <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px;">01</div>
+        <div style="font-size:17px; font-weight:700; margin-bottom:10px; line-height:1.4;">이미 증명된 공간</div>
+        <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.55); line-height:1.8;">이 공간에서 찍은 영상이 100만 · 200만 · 400만뷰를 기록했습니다.<br>표현 방식만 바꿔도 또 터집니다.</p>
+      </div>
+
+      <div style="background:var(--gray-dark); padding:36px 28px; border-left:3px solid #3D7C8E;">
+        <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px;">02</div>
+        <div style="font-size:17px; font-weight:700; margin-bottom:10px; line-height:1.4;">한 번 방문 = 콘텐츠 5개</div>
+        <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.55); line-height:1.8;">풀빌라 · 웨일 객실 · 아우로라 · 7번 국도 · 화진해수욕장. 올려야 할 콘텐츠는 3개지만 찍을 거리는 무한합니다.</p>
+      </div>
+
+      <div style="background:var(--gray-dark); padding:36px 28px; border-left:3px solid var(--gold);">
+        <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px;">03</div>
+        <div style="font-size:17px; font-weight:700; margin-bottom:10px; line-height:1.4;">아직 선점 가능한 지역</div>
+        <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.55); line-height:1.8;">솔밭 캠핑장, 초대형 카페 아우로라, 스타벅스까지. 화진 주민들이 만들어가는 이야기가 넘칩니다. 먼저 올리면 선점입니다.</p>
+      </div>
+
+      <div style="background:var(--gray-dark); padding:36px 28px; border-left:3px solid #3D7C8E;">
+        <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px;">04</div>
+        <div style="font-size:17px; font-weight:700; margin-bottom:10px; line-height:1.4;">단순 협찬이 아닌 수익</div>
+        <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.55); line-height:1.8;">1등 공구이벤트 예상 수익 200~500만원. 웬만한 체험단에는 없는 구조입니다.</p>
+      </div>
+
+      <div style="background:var(--gray-dark); padding:36px 28px; border-left:3px solid var(--gold);">
+        <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px;">05</div>
+        <div style="font-size:17px; font-weight:700; margin-bottom:10px; line-height:1.4;">슬로우오션이 광고비로 밀어줌</div>
+        <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.55); line-height:1.8;">조회수 상위 10위 콘텐츠에 메타 광고 부스팅 지원. 내 영상을 슬로우오션이 직접 띄워줍니다.</p>
+      </div>
+
+      <div style="background:var(--gray-dark); padding:36px 28px; border-left:3px solid #3D7C8E;">
+        <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px;">06</div>
+        <div style="font-size:17px; font-weight:700; margin-bottom:10px; line-height:1.4;">포트폴리오가 되는 경험</div>
+        <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.55); line-height:1.8;">슬로우오션 × 흑백체험단 참가 이력. 시즌제로 이어지며 상위 10위 랭커는 다음 시즌 자동 초대됩니다.</p>
+      </div>
+
+    </div>
+
+    <!-- 이런 분이라면 지원하세요 -->
+    <span style="font-family:var(--sans); font-size:10px; letter-spacing:0.4em; color:var(--gold); display:block; margin-bottom:20px;">FOR YOU</span>
+    <h2 style="font-size:clamp(28px,5vw,48px); font-weight:700; margin-bottom:12px;">이런 분이라면<br>지금 바로 지원하세요</h2>
+    <div style="width:60px; height:1px; background:linear-gradient(90deg,#3D7C8E,var(--gold)); margin-bottom:60px;"></div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px;">
+
+      <!-- 흑팀 -->
+      <div style="background:#080808; border:1px solid #1a1a1a;">
+        <div style="background:#080808; padding:24px 28px; border-bottom:1px solid #1a1a1a; display:flex; align-items:center; gap:12px;">
+          <span style="font-family:var(--sans); font-size:11px; letter-spacing:0.3em; color:#fff; font-weight:700;">TEAM BLACK · 흑팀</span>
+          <span style="font-family:var(--sans); font-size:11px; color:#555;">팔로워 1,000~9,999</span>
+        </div>
+        <div style="padding:28px;">
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:16px;">
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:var(--gold);">✦</span>내 팔로워는 아직 1만이 안 된다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:var(--gold);">✦</span>특별한 콘텐츠를 갖고 있는데 요즘 조회수가 안 나온다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:var(--gold);">✦</span>팔로워는 적지만 내 기획력에 자신 있다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:var(--gold);">✦</span>한 번이라도 영상이 터졌으면 좋겠는데 계기가 없었다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:var(--gold);">✦</span>기획력으로 승부하고 싶은데 그럴 기회가 없었다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:var(--gold);">✦</span>단순 협찬 말고 진짜 수익이 생기는 활동을 해보고 싶다</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 백팀 -->
+      <div style="background:#f0ede8; border:1px solid #ddd;">
+        <div style="background:#f0ede8; padding:24px 28px; border-bottom:1px solid #ddd; display:flex; align-items:center; gap:12px;">
+          <span style="font-family:var(--sans); font-size:11px; letter-spacing:0.3em; color:#080808; font-weight:700;">TEAM WHITE · 백팀</span>
+          <span style="font-family:var(--sans); font-size:11px; color:#888;">팔로워 10,000+</span>
+        </div>
+        <div style="padding:28px;">
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:16px;">
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(8,8,8,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:#3D7C8E;">✦</span>팔로워는 많은데 요즘따라 조회수가 안 나온다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(8,8,8,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:#3D7C8E;">✦</span>뉴비들의 영상 표현 방법을 보며 새로운 트렌드를 학습하고 싶다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(8,8,8,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:#3D7C8E;">✦</span>팔로워 1천짜리한테 조회수로 지면 어쩌나 — 근데 그게 더 재밌을 것 같다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(8,8,8,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:#3D7C8E;">✦</span>내가 1등 못 할 이유가 없다. 근데 증명할 무대가 없었다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(8,8,8,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:#3D7C8E;">✦</span>협찬은 충분히 받았다. 이번엔 진짜 실력으로 승부하고 싶다</li>
+            <li style="font-family:var(--sans); font-size:13px; color:rgba(8,8,8,0.7); line-height:1.7; padding-left:20px; position:relative;"><span style="position:absolute;left:0;color:#3D7C8E;">✦</span>숫자가 아닌 콘텐츠로 다시 한번 주목받고 싶다</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center; margin-top:60px;">
+      <a href="#apply" style="display:inline-block; background:var(--gold); color:var(--black); font-family:var(--serif); font-size:16px; font-weight:700; letter-spacing:0.1em; padding:20px 60px; text-decoration:none;">지금 바로 지원하기 →</a>
+    </div>
+
+  </div>
+</div>
 
 <!-- 동해안 풀스크린 -->
 <div style="position:relative; height:70vh; overflow:hidden; display:flex; align-items:center; justify-content:center;">
@@ -1424,7 +1626,7 @@
       <div class="benefit-title">히든포레스트<br>객실 1박</div>
       <p class="benefit-desc">
         야외 온수풀 풀빌라<br>
-        <strong>금·일 중 택 1 (토요일 제외)</strong><br>
+        <strong>일~금 중 택 1</strong><br>
         본인 네이버 예약 후 전액 환불
       </p>
       </div>
@@ -1521,7 +1723,7 @@
   <div style="background: var(--gray-dark); padding: 32px 40px; border-left: 3px solid var(--gold); display: inline-block; max-width: 100%;">
     <p style="font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.5); line-height: 1.8;">
       패자부활전 혜택 · 슬로우오션 평일 객실 1박 제공<br>
-      필수 조건 · 체험일로부터 7일 이내 릴스 1개 업로드
+      필수 조건 · 체험일로부터 10일 이내 릴스 1개 업로드
     </p>
   </div>
 </div>
@@ -1597,7 +1799,7 @@
 
   <p style="font-family: var(--sans); font-size: 12px; color: rgba(240,237,232,0.35); margin-top: 20px; line-height: 1.8;">
     체험일로부터 10일 이내 업로드 필수 · 슬로우오션·아우로라·화진해수욕장 계정 태그 필수<br>
-    필수 3개 미업로드 시 점수 산정 제외 및 환불 없음
+    필수 4개 미업로드 시 점수 산정 제외 및 환불 없음
   </p>
   <div style="background:#1a1500; border:1px solid rgba(201,168,76,0.3); padding:20px 28px; margin-top:16px; display:flex; gap:16px; align-items:flex-start;">
     <span style="color:var(--gold); font-size:18px; flex-shrink:0;">✦</span>
@@ -1654,7 +1856,7 @@
       <div class="tl-dot"><div class="tl-dot-inner"></div></div>
       <div class="tl-content">
         <div class="tl-title">콘텐츠 업로드 마감</div>
-        <div class="tl-desc">체험일로부터 10일 이내 · 필수 3개 + 링크 제출</div>
+        <div class="tl-desc">체험일로부터 10일 이내 · 필수 4개 + 링크 제출</div>
       </div>
     </div>
 
@@ -1902,7 +2104,7 @@
         </label>
         <label class="agree-item">
           <input type="checkbox" class="agree-check" name="agree">
-          <span class="agree-text">체험일로부터 10일 이내 필수 콘텐츠 3개 미업로드 시 숙박비 환불이 없음에 동의합니다.</span>
+          <span class="agree-text">체험일로부터 10일 이내 필수 콘텐츠 4개 미업로드 시 숙박비 환불이 없음에 동의합니다.</span>
         </label>
         <label class="agree-item">
           <input type="checkbox" class="agree-check" name="agree">
@@ -2099,17 +2301,17 @@ function downloadCard() {
       <div style="background:var(--gray-dark); padding:32px 20px; text-align:center;">
         <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:var(--gold); margin-bottom:12px;">SEASON 01</div>
         <div style="font-size:20px; font-weight:900; margin-bottom:8px;">화진편</div>
-        <div style="font-family:var(--sans); font-size:11px; color:rgba(240,237,232,0.4);">슬로우오션<br>화진해수욕장 · 7번 국도</div>
+        <div style="font-family:var(--sans); font-size:11px; color:rgba(240,237,232,0.4);">슬로우오션<br>화진해수욕장</div>
       </div>
       <div style="background:#111; padding:32px 20px; text-align:center; border:1px dashed #2a2a2a;">
         <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:#444; margin-bottom:12px;">SEASON 02</div>
-        <div style="font-size:20px; font-weight:900; margin-bottom:8px; color:#444;">포항편</div>
-        <div style="font-family:var(--sans); font-size:11px; color:#333;">반응에 따라 확정<br>포항 전역 확장</div>
+        <div style="font-size:20px; font-weight:900; margin-bottom:8px; color:#444;">7번 국도편</div>
+        <div style="font-family:var(--sans); font-size:11px; color:#333;">반응에 따라 확정<br>7번 국도 전체 확장</div>
       </div>
       <div style="background:#111; padding:32px 20px; text-align:center; border:1px dashed #2a2a2a;">
         <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.3em; color:#444; margin-bottom:12px;">SEASON 03</div>
         <div style="font-size:20px; font-weight:900; margin-bottom:8px; color:#444;">전국편</div>
-        <div style="font-family:var(--sans); font-size:11px; color:#333;">전국 숙소 연계<br>규모 확장</div>
+        <div style="font-family:var(--sans); font-size:11px; color:#333;">전국 숙소 연계<br>대한민국 여행 콘텐츠 확장</div>
       </div>
     </div>
 
@@ -2294,6 +2496,70 @@ function copyLink() {
   setInterval(tick, 33);
   tick();
 })();
+</script>
+
+
+<script>
+// 구글 시트 실시간 지원자 연동
+const SHEET_ID = '1OEM15tjwUmVWod6KVrfBziKsNs4diz5mZNytLV1BM2Y';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+
+let nicknames = [];
+let currentIdx = 0;
+
+async function fetchNicknames() {
+  try {
+    const res = await fetch(SHEET_URL);
+    const text = await res.text();
+    const json = JSON.parse(text.replace(/.*?({.*}).*/s, '$1'));
+    const rows = json.table.rows;
+    nicknames = rows
+      .map(r => r.c && r.c[0] && r.c[0].v ? r.c[0].v.toString().trim() : null)
+      .filter(Boolean);
+    updateRemainCount();
+  } catch(e) {
+    console.log('시트 연동 오류:', e);
+  }
+}
+
+function updateRemainCount() {
+  const rc = document.getElementById('remainCount');
+  if (rc && nicknames.length > 0) {
+    rc.textContent = Math.max(0, 30 - nicknames.length);
+  }
+}
+
+function showNextNickname() {
+  const el = document.getElementById('liveScroll');
+  if (!el || nicknames.length === 0) return;
+
+  const nickname = nicknames[currentIdx % nicknames.length];
+  currentIdx++;
+
+  el.style.transform = 'translateY(-100%)';
+  el.style.opacity = '0';
+
+  setTimeout(() => {
+    el.innerHTML = `<span style="font-family:var(--sans); font-size:14px; color:rgba(240,237,232,0.7);">
+      <span style="color:var(--gold); font-weight:600;">${nickname}</span> 님이 지원했습니다
+    </span>`;
+    el.style.transform = 'translateY(0)';
+    el.style.opacity = '1';
+  }, 300);
+}
+
+fetchNicknames().then(() => {
+  if (nicknames.length > 0) {
+    showNextNickname();
+    setInterval(showNextNickname, 3000);
+  } else {
+    const el = document.getElementById('liveScroll');
+    if (el) el.innerHTML = '<span style="font-family:var(--sans); font-size:14px; color:rgba(240,237,232,0.3);">첫 번째 지원자를 기다리고 있습니다</span>';
+  }
+});
+
+// 5분마다 시트 새로고침
+setInterval(fetchNicknames, 300000);
 </script>
 
 </body>
