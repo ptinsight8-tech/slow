@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>흑백체험단 당첨자 확인 — 슬로우오션</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --white: #f0ede8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --gray-dark: #1a1a1a;
+    --gray-mid: #2a2a2a;
+    --teal: #3D7C8E;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: var(--serif); overflow-x: hidden; }
+
+  /* ── 진입 화면 ── */
+  #entry-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .entry-badge {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 20px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .entry-title {
+    font-size: clamp(28px, 8vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+    opacity: 0;
+  }
+
+  .entry-title .gold { color: var(--gold); }
+
+  .entry-sub {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: rgba(240,237,232,0.45);
+    margin-bottom: 60px;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+    opacity: 0;
+  }
+
+  .entry-form {
+    width: 100%;
+    max-width: 400px;
+    animation: fadeUp 0.6s ease forwards 0.3s;
+    opacity: 0;
+  }
+
+  .entry-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
+  .entry-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    color: var(--white);
+    font-family: var(--serif);
+    font-size: 20px;
+    padding: 12px 0;
+    outline: none;
+    transition: border-color 0.3s;
+    margin-bottom: 32px;
+  }
+
+  .entry-input:focus { border-bottom-color: var(--gold); }
+  .entry-input::placeholder { color: #333; font-size: 16px; }
+
+  .entry-btn {
+    width: 100%;
+    background: var(--gold);
+    color: var(--black);
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 18px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .entry-btn:hover { background: var(--gold-light); }
+
+  .entry-error {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: #c06060;
+    margin-top: 16px;
+    display: none;
+    animation: fadeUp 0.3s ease forwards;
+  }
+
+  /* ── 축하 화면 ── */
+  #congrats-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: var(--black);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  #congrats-screen.show { display: flex; }
+
+  .congrats-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .congrats-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+    animation: bounceIn 0.6s ease forwards;
+  }
+
+  .congrats-title {
+    font-size: clamp(28px, 8vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+    opacity: 0;
+  }
+
+  .congrats-title .gold { color: var(--gold); }
+
+  .congrats-name {
+    font-size: clamp(18px, 4vw, 28px);
+    font-weight: 300;
+    color: rgba(240,237,232,0.7);
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s ease forwards 0.3s;
+    opacity: 0;
+  }
+
+  .congrats-name strong { color: var(--gold); font-weight: 700; }
+
+  .congrats-btn {
+    background: var(--gold);
+    color: var(--black);
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 20px 60px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    animation: fadeUp 0.6s ease forwards 0.5s;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .congrats-btn:hover { background: var(--gold-light); }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* ── 가이드라인 본문 ── */
+  #guide-body { display: none; }
+  #guide-body.show { display: block; }
+
+  /* 히어로 */
+  .hero {
+    position: relative;
+    padding: 80px 20px 60px;
+    text-align: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 6px 20px;
+    margin-bottom: 32px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 8vw, 72px);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .hero-title .gold { color: var(--gold); }
+  .hero-sub {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: rgba(240,237,232,0.5);
+    margin-bottom: 40px;
+  }
+  .hero-congrats {
+    display: inline-block;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 20px 40px;
+    font-size: clamp(14px, 2vw, 17px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--white);
+  }
+
+  /* 네비게이션 */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #1a1a1a;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-inner {
+    display: flex;
+    gap: 0;
+    min-width: max-content;
+    padding: 0 20px;
+  }
+  .nav-item {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(240,237,232,0.4);
+    padding: 16px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-item:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* 섹션 */
+  .section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .section-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    margin-bottom: 40px;
+  }
+
+  /* 혜택 카드 */
+  .benefit-cards { display: flex; flex-direction: column; gap: 2px; }
+  .benefit-card {
+    background: var(--gray-dark);
+    padding: 28px 32px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    border-left: 3px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .benefit-num {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+  .benefit-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+  .benefit-desc { font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.55); line-height: 1.8; }
+  .benefit-desc strong { color: var(--gold-light); font-weight: 500; }
+
+  /* 예약 */
+  .info-box { background: var(--gray-dark); padding: 28px 32px; margin-bottom: 16px; }
+  .info-box-title { font-family: var(--sans); font-size: 11px; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 14px; }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .info-list li { font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.7); line-height: 1.7; padding-left: 16px; position: relative; }
+  .info-list li::before { content: '·'; position: absolute; left: 0; color: var(--gold); }
+  .warn-box { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); padding: 20px 24px; margin-top: 16px; }
+  .warn-box p { font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.6); line-height: 1.8; }
+  .warn-box strong { color: var(--gold-light); font-weight: 600; }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 2px; }
+  .faq-item { background: var(--gray-dark); overflow: hidden; }
+  .faq-q {
+    padding: 20px 28px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+  }
+  .faq-q::after { content: '+'; color: var(--gold); font-size: 20px; font-weight: 300; flex-shrink: 0; transition: transform 0.3s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.6); line-height: 1.8; padding: 0 28px; }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 28px 20px; }
+
+  /* 미션 */
+  .mission-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .mission-table th { background: var(--gray-mid); font-family: var(--sans); font-size: 11px; letter-spacing: 0.2em; color: var(--gold); padding: 14px 20px; text-align: left; font-weight: 500; }
+  .mission-table td { background: var(--gray-dark); font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.75); padding: 16px 20px; border-top: 1px solid #222; line-height: 1.6; }
+  .mission-table td:first-child { color: var(--gold); font-weight: 600; white-space: nowrap; }
+
+  /* 태그 */
+  .tag-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag { background: var(--gray-dark); border: 1px solid #333; font-family: var(--sans); font-size: 12px; color: rgba(240,237,232,0.6); padding: 6px 14px; border-radius: 2px; }
+  .tag.gold { border-color: rgba(201,168,76,0.3); color: var(--gold-light); background: rgba(201,168,76,0.08); }
+
+  /* 촬영 가이드 */
+  .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .guide-card { padding: 28px 24px; }
+  .guide-card.green { background: rgba(61,124,142,0.1); border: 1px solid rgba(61,124,142,0.2); }
+  .guide-card.red { background: rgba(180,60,60,0.08); border: 1px solid rgba(180,60,60,0.15); }
+  .guide-card-title { font-family: var(--sans); font-size: 11px; letter-spacing: 0.3em; margin-bottom: 16px; font-weight: 600; }
+  .guide-card.green .guide-card-title { color: var(--teal); }
+  .guide-card.red .guide-card-title { color: #c06060; }
+  .guide-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .guide-card ul li { font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.65); line-height: 1.6; padding-left: 14px; position: relative; }
+  .guide-card.green ul li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); }
+  .guide-card.red ul li::before { content: '✕'; position: absolute; left: 0; color: #c06060; }
+
+  /* 집계 */
+  .score-bar-wrap { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+  .score-bar-label { display: flex; justify-content: space-between; font-family: var(--sans); font-size: 13px; margin-bottom: 8px; color: rgba(240,237,232,0.8); }
+  .score-bar-label span:last-child { color: var(--gold); font-weight: 700; }
+  .score-bar-track { height: 4px; background: rgba(255,255,255,0.08); overflow: hidden; }
+  .score-bar-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); }
+
+  /* 환불 */
+  .refund-steps { display: flex; flex-direction: column; gap: 2px; margin-bottom: 24px; }
+  .refund-step { background: var(--gray-dark); padding: 28px 32px; display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start; }
+  .refund-step-num { font-family: var(--sans); font-size: 10px; letter-spacing: 0.3em; color: var(--gold); padding-top: 4px; }
+  .refund-step-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .refund-step-desc { font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.55); line-height: 1.8; }
+  .exception-list { background: rgba(180,60,60,0.06); border: 1px solid rgba(180,60,60,0.15); padding: 24px 28px; }
+  .exception-list-title { font-family: var(--sans); font-size: 11px; letter-spacing: 0.3em; color: #c06060; margin-bottom: 16px; }
+  .exception-list ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .exception-list ul li { font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.6); line-height: 1.7; padding-left: 18px; position: relative; }
+  .exception-list ul li::before { content: '!'; position: absolute; left: 0; color: #c06060; font-weight: 700; }
+
+  /* 우승자 */
+  .prize-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .prize-card { background: var(--gray-dark); padding: 36px 28px; text-align: center; }
+  .prize-card.featured { background: linear-gradient(135deg, #1a1400, #111); border: 1px solid rgba(201,168,76,0.3); }
+  .prize-card-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 16px; }
+  .prize-card-title { font-size: clamp(16px, 2.5vw, 20px); font-weight: 700; line-height: 1.4; margin-bottom: 12px; }
+  .prize-card-desc { font-family: var(--sans); font-size: 12px; color: rgba(240,237,232,0.45); line-height: 1.7; }
+
+  /* 흑백팀 공개 */
+  .team-reveal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 24px;
+  }
+  .team-reveal-card {
+    padding: 40px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+  .team-reveal-card.black { background: #080808; border: 1px solid #222; }
+  .team-reveal-card.white { background: #f0ede8; }
+  .team-reveal-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.3em; margin-bottom: 12px; font-weight: 600; }
+  .team-reveal-card.black .team-reveal-label { color: rgba(255,255,255,0.4); }
+  .team-reveal-card.white .team-reveal-label { color: rgba(8,8,8,0.4); }
+  .team-reveal-slots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 100%; }
+  .team-slot { aspect-ratio: 1; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.1); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-size: 9px; color: rgba(255,255,255,0.15); }
+  .team-reveal-card.white .team-slot { background: rgba(8,8,8,0.05); border-color: rgba(8,8,8,0.1); color: rgba(8,8,8,0.2); }
+  .team-coming { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; margin-top: 16px; }
+  .team-reveal-card.black .team-coming { color: rgba(255,255,255,0.3); }
+  .team-reveal-card.white .team-coming { color: rgba(8,8,8,0.3); }
+
+  /* 버튼 */
+  .action-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 18px 32px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-secondary {
+    background: transparent;
+    color: rgba(240,237,232,0.5);
+    font-family: var(--sans);
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    padding: 16px 32px;
+    border: 1px solid #333;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover { border-color: #555; color: var(--white); }
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--gray-dark);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 14px 28px;
+    opacity: 0;
+    transition: all 0.3s;
+    white-space: nowrap;
+    z-index: 999;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* 푸터 */
+  footer { padding: 60px 20px; text-align: center; border-top: 1px solid #1a1a1a; }
+  .footer-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 12px; }
+  .footer-contact { font-family: var(--sans); font-size: 13px; color: rgba(240,237,232,0.4); line-height: 2; }
+  .footer-closing { font-size: 16px; font-weight: 300; color: rgba(240,237,232,0.6); margin: 24px 0 8px; font-style: italic; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .guide-grid { grid-template-columns: 1fr; }
+    .prize-grid { grid-template-columns: 1fr; }
+    .team-reveal { grid-template-columns: 1fr; }
+    .refund-step { grid-template-columns: 60px 1fr; }
+    .benefit-card { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 진입 화면 ── -->
+<div id="entry-screen">
+  <span class="entry-badge">SLOWOCEAN × 흑백체험단 · 화진편</span>
+  <h1 class="entry-title">당첨자<br><span class="gold">확인</span></h1>
+  <p class="entry-sub">인스타그램 아이디(@) 또는 개인 전화번호를 입력해주세요</p>
+  <div class="entry-form">
+    <label class="entry-label">INSTAGRAM ID</label>
+    <input type="text" class="entry-input" id="insta-input" placeholder="@인스타아이디 또는 010-0000-0000" autocomplete="off" autocapitalize="none">
+    <button class="entry-btn" onclick="checkEntry()">확인하기 →</button>
+    <p class="entry-error" id="entry-error">아이디를 다시 확인해 주세요</p>
+  </div>
+</div>
+
+<!-- ── 축하 화면 ── -->
+<div id="congrats-screen">
+  <div class="congrats-particles" id="particles"></div>
+  <div class="congrats-icon">🎉</div>
+  <h1 class="congrats-title">당첨을<br><span class="gold">축하드립니다</span></h1>
+  <p class="congrats-name" id="congrats-name">@slowocean60 님</p>
+  <button class="congrats-btn" onclick="enterGuide()">가이드라인 확인하기 →</button>
+</div>
+
+<!-- ── 가이드라인 본문 ── -->
+<div id="guide-body">
+
+<!-- 히어로 -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-badge">SLOWOCEAN × 흑백체험단 · 화진편</span>
+    <h1 class="hero-title">당첨을<br><span class="gold">축하드립니다</span></h1>
+    <p class="hero-sub">PARTICIPANT GUIDE · SEASON 01</p>
+    <div class="hero-congrats">
+      당신은 슬로우오션 × 흑백체험단 화진편에 함께하게 되었어요.<br>
+      아래 내용을 꼼꼼히 읽어주세요.
+    </div>
+  </div>
+</section>
+
+<!-- 네비게이션 -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#benefits" class="nav-item">혜택 안내</a>
+    <a href="#booking" class="nav-item">예약 방법</a>
+    <a href="#faq" class="nav-item">자주 묻는 질문</a>
+    <a href="#mission" class="nav-item">콘텐츠 미션</a>
+    <a href="#guide" class="nav-item">촬영 가이드</a>
+    <a href="#scoring" class="nav-item">집계 기준</a>
+    <a href="#refund" class="nav-item">환불 안내</a>
+    <a href="#prize" class="nav-item">우승자 상품</a>
+    <a href="#team" class="nav-item">팀 공개</a>
+    <a href="#actions" class="nav-item">신청·제출</a>
+  </div>
+</nav>
+
+<!-- 혜택 안내 -->
+<section class="section" id="benefits">
+  <span class="section-label">BENEFITS</span>
+  <h2 class="section-title">혜택 안내</h2>
+  <div class="divider"></div>
+  <div class="benefit-cards">
+    <div class="benefit-card" style="border-left-color:var(--gold);">
+      <span class="benefit-num">01</span>
+      <div>
+        <div class="benefit-title">슬로우오션 웨일 객실 1박</div>
+        <p class="benefit-desc">월~목 중 사용 가능<br><strong>아이 동반 or 아이 관련 콘텐츠 계정 → 웨일 K타입</strong><br>아이 미동반 → 웨일 F타입<br>객실 타입 변경 불가, 구성원에 맞게 예약해주세요</p>
+      </div>
+    </div>
+    <div class="benefit-card" style="border-left-color:var(--teal);">
+      <span class="benefit-num">02</span>
+      <div>
+        <div class="benefit-title">히든포레스트 1박</div>
+        <p class="benefit-desc">일~금 중 사용 가능<br><strong>사우나 · 스파 · 야외 온수풀 · 바베큐(숯불) 풀패키지</strong></p>
+      </div>
+    </div>
+    <div class="benefit-card" style="border-left-color:#555;">
+      <span class="benefit-num">03</span>
+      <div>
+        <div class="benefit-title">아우로라 카페 이용권</div>
+        <p class="benefit-desc">음료·베이커리 <strong>5만원권</strong><br>카카오톡으로 입실 시 전달</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 예약 방법 -->
+<section class="section" id="booking">
+  <span class="section-label">BOOKING</span>
+  <h2 class="section-title">예약 방법</h2>
+  <div class="divider"></div>
+  <div class="info-box" style="margin-bottom:16px;">
+    <div class="info-box-title">예약 안내</div>
+    <ul class="info-list">
+      <li>원하는 날짜로 네이버에서 직접 예약해주세요</li>
+      <li>최대 4인 (가족 방문 시 5인까지 인정)</li>
+      <li>가급적 연박으로 진행, 부득이한 경우 2회 방문도 가능</li>
+    </ul>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:16px;">
+    <div class="info-box" style="margin:0;">
+      <div class="info-box-title">이용 가능 기간</div>
+      <p style="font-family:var(--sans); font-size:14px; color:var(--white); font-weight:600;">4월 20일 ~ 6월 첫째 주</p>
+    </div>
+    <div class="info-box" style="margin:0; background:rgba(180,60,60,0.06); border:1px solid rgba(180,60,60,0.15);">
+      <div class="info-box-title" style="color:#c06060;">이용 불가 날짜</div>
+      <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.65); line-height:1.7;">5월 1일~4일 황금연휴<br>5월 23일~25일</p>
+    </div>
+  </div>
+  <div class="info-box">
+    <div class="info-box-title">투숙 순서 · 체크인·아웃</div>
+    <ul class="info-list">
+      <li>히든포레스트 → 웨일 순서로 진행 <strong style="color:rgba(240,237,232,0.4)">(순서 변경 불가)</strong></li>
+      <li>체크인 15:00 · 체크아웃 11:00</li>
+      <li>다음 객실 비어있을 시 바로 이동 가능</li>
+      <li>전날 다른 손님이 있을 경우 퇴실 후 재입실 (청소 우선 진행)</li>
+    </ul>
+  </div>
+  <div class="warn-box" style="margin-top:16px;">
+    <p><strong>6월 연장 관련</strong><br>개인 사정으로 날짜가 맞지 않는 경우 6월 평일(월~목) 이용 가능합니다.<br>단, 6월 이용 시 흑백체험단 심사 대상에서 제외됩니다.</p>
+  </div>
+  <div style="margin-top:24px; text-align:center;">
+    <a href="https://naver.me/G9r5hRha" target="_blank" class="btn-primary" style="max-width:300px; margin:0 auto; display:inline-block;">네이버 예약하기 →</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <span class="section-label">FAQ</span>
+  <h2 class="section-title">자주 묻는 질문</h2>
+  <div class="divider"></div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">아이랑 가는데 F타입으로 예약할 수 없나요?</div>
+      <div class="faq-a">각 객실의 브랜딩 방향성이 있어 어렵습니다. 아이 동반 또는 아이 관련 콘텐츠를 주로 업로드하시는 분은 K타입으로 예약해주세요.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">웨일과 히든포레스트 투숙 순서를 바꿀 수 있나요?</div>
+      <div class="faq-a">순서 변경은 어렵습니다. 히든포레스트 → 웨일 순서로 진행됩니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">평일로 2박 이용할 수 있나요?</div>
+      <div class="faq-a">네, 가능합니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">5월 일정이 빡빡한데 6월로 미룰 수 있나요?</div>
+      <div class="faq-a">6월 첫째 주까지 가능합니다. 정말 부득이한 경우 공휴일 제외 6월 평일 투숙 가능하나, 흑백체험단 심사 대상에서 제외됩니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">개인 상담이 필요한 경우</div>
+      <div class="faq-a">010-6370-8078로 연락주세요. 가급적 문자 부탁드립니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 콘텐츠 미션 -->
+<section class="section" id="mission">
+  <span class="section-label">MISSION</span>
+  <h2 class="section-title">콘텐츠 미션</h2>
+  <div class="divider"></div>
+  <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.5); margin-bottom:24px; line-height:1.8;">체험일로부터 <strong style="color:var(--white);">10일 이내</strong> 업로드 필수</p>
+  <table class="mission-table">
+    <thead><tr><th>구분</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>필수 01</td><td>히든포레스트 릴스 1개</td></tr>
+      <tr><td>필수 02</td><td>슬로우오션 웨일 객실 릴스 1개</td></tr>
+      <tr><td>필수 03</td><td>아우로라 카페 릴스 1개</td></tr>
+      <tr><td>필수 04</td><td>화진해수욕장 콘텐츠 1개 (캐러셀 권장, 릴스 가능)</td></tr>
+    </tbody>
+  </table>
+  <div class="warn-box">
+    <p><strong>추가 업로드 환영</strong><br>업로드 기간 내 콘텐츠 중 조회수 가장 높은 것으로 집계됩니다. 잘 되는 영상으로 승부하세요.</p>
+  </div>
+  <div style="margin-top:24px;">
+    <p style="font-family:var(--sans); font-size:11px; letter-spacing:0.3em; color:var(--gold); margin-bottom:12px;">필수 태그 계정</p>
+    <div class="tag-wrap">
+      <span class="tag gold">@slowocean60</span>
+      <span class="tag gold">@the.aurora.space</span>
+    </div>
+  </div>
+  <div style="margin-top:24px;">
+    <p style="font-family:var(--sans); font-size:11px; letter-spacing:0.3em; color:var(--gold); margin-bottom:12px;">필수 해시태그 (전 콘텐츠 공통)</p>
+    <div class="tag-wrap">
+      <span class="tag">#흑백체험단</span>
+      <span class="tag">#화진해수욕장</span>
+      <span class="tag">#포항풀빌라</span>
+      <span class="tag">#포항가볼만한곳</span>
+      <span class="tag">#포항펜션</span>
+      <span class="tag">#슬로우오션</span>
+    </div>
+  </div>
+</section>
+
+<!-- 촬영 가이드 -->
+<section class="section" id="guide">
+  <span class="section-label">SHOOTING GUIDE</span>
+  <h2 class="section-title">촬영 가이드라인</h2>
+  <div class="divider"></div>
+  <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.45); margin-bottom:24px; line-height:1.8;">추후 디테일한 가이드라인 및 브랜드 톤앤매너를 별도 전달드립니다.<br>본인 콘텐츠만의 특장점이 있는 경우 가이드라인에 100% 맞추지 않아도 됩니다.</p>
+  <div class="guide-grid">
+    <div class="guide-card green">
+      <div class="guide-card-title">권장</div>
+      <ul>
+        <li>다양한 각도 (멀리서 전체샷 · 줌인 디테일샷)</li>
+        <li>다양한 모션 (다이빙 · 가운 착용 · 수건 질감 · 사우나 · 불멍)</li>
+        <li>다양한 색감 (풀 · 과일 · 음식)</li>
+        <li>객실 분위기 · 자연 분위기 위주</li>
+      </ul>
+    </div>
+    <div class="guide-card red">
+      <div class="guide-card-title">지양</div>
+      <ul>
+        <li>영상의 50% 미만이 숙소·카페 공간인 경우</li>
+        <li>숙소·카페가 어디인지 모를 정도로 배경만 등장하고 인물만 강조된 경우</li>
+      </ul>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:16px;">
+    <p>기존 조회수 높은 영상 분석자료 · <strong>1주일 내 추가 제공</strong> 예정</p>
+  </div>
+</section>
+
+<!-- 집계 기준 -->
+<section class="section" id="scoring">
+  <span class="section-label">SCORING</span>
+  <h2 class="section-title">조회수 집계 기준</h2>
+  <div class="divider"></div>
+  <div class="info-box" style="margin-bottom:24px;">
+    <div class="info-box-title">집계 시점</div>
+    <p style="font-family:var(--sans); font-size:14px; color:var(--white); font-weight:600; line-height:1.7;">마지막 업로드일 기준 +7일 12시</p>
+    <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.5); margin-top:8px; line-height:1.7;">해당 시각의 조회수 스크린샷을 마감 설문에 제출해주세요</p>
+  </div>
+  <div class="score-bar-wrap">
+    <div>
+      <div class="score-bar-label"><span>인스타 릴스 조회수 합산</span><span>70%</span></div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:70%;"></div></div>
+    </div>
+    <div>
+      <div class="score-bar-label"><span>다채널 보너스</span><span>30%</span></div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:30%;"></div></div>
+    </div>
+  </div>
+  <div class="warn-box">
+    <p><strong>다채널 보너스란?</strong><br>블로그 · 유튜브 · 당근 · 네이버플레이스에 추가 업로드 시 보너스 점수 적용</p>
+  </div>
+</section>
+
+<!-- 환불 -->
+<section class="section" id="refund">
+  <span class="section-label">REFUND</span>
+  <h2 class="section-title">환불 안내</h2>
+  <div class="divider"></div>
+  <div class="warn-box" style="margin-bottom:24px;">
+    <p>숙소를 7년간 운영하면서 보증금 미환급 건은 단 한 건도 없습니다.<br>믿고 예약해주시면 감사드리겠습니다.</p>
+  </div>
+  <div class="refund-steps">
+    <div class="refund-step">
+      <span class="refund-step-num">1차 환불</span>
+      <div>
+        <div class="refund-step-title">업로드 + 클립 제출 확인 후</div>
+        <p class="refund-step-desc">필수 콘텐츠 4개 업로드 + 원본 클립 10개 슬로우오션 제출 확인 후<br>숙박비 전액에서 5만원 제외 후 환불<br>환불 계좌는 마감 설문에서 제출해주세요</p>
+      </div>
+    </div>
+    <div class="refund-step" style="border-left:3px solid var(--teal);">
+      <span class="refund-step-num">2차 환불</span>
+      <div>
+        <div class="refund-step-title">게시물 유지 확인 후 (보증금)</div>
+        <p class="refund-step-desc">최종 우승자 발표일까지 게시물 유지 확인 후 잔여 5만원 전원 환불<br><strong style="color:#c06060;">게시물 삭제 또는 비공개 전환 시 보증금 미환불</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="exception-list">
+    <div class="exception-list-title">미환불 예외 조건</div>
+    <ul>
+      <li>단기 복구 불가능한 수준의 심각한 객실 오염·파손</li>
+      <li>필수 콘텐츠 미업로드</li>
+      <li>영상 전체 길이의 50% 미만이 숙소·카페 공간으로 구성된 경우</li>
+      <li>숙소·카페가 어디인지도 모를 정도로 배경에만 등장하고 인물만 강조된 경우</li>
+      <li>봇·매크로 등 조회수 조작 확인 시 (단, 매니챗 등 자동 DM 툴은 사용 가능)</li>
+      <li>슬로우오션·아우로라 계정 태그 미포함</li>
+      <li>업로드 기한(10일) 초과</li>
+      <li>게시물 삭제 또는 비공개 전환</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 우승자 상품 -->
+<section class="section" id="prize">
+  <span class="section-label">PRIZE</span>
+  <h2 class="section-title">최종 우승자 상품</h2>
+  <div class="divider"></div>
+  <p style="font-family:var(--sans); font-size:13px; color:rgba(240,237,232,0.5); margin-bottom:24px; line-height:1.8;">F타입 1명 · K타입 1명 각각 선정<br>다음 중 1가지 선택 가능</p>
+  <div class="prize-grid">
+    <div class="prize-card featured">
+      <div class="prize-card-label">OPTION 01</div>
+      <div class="prize-card-title">슬로우오션<br>공구이벤트 공동 진행</div>
+      <p class="prize-card-desc">1주일 진행 · 수수료 7%<br>예상 수익 200만~500만원<br>판만큼 가져가는 구조</p>
+    </div>
+    <div class="prize-card">
+      <div class="prize-card-label">OPTION 02</div>
+      <div class="prize-card-title">히든포레스트 1박<br>+ 웨일 객실 1박</div>
+      <p class="prize-card-desc">동일 조건 숙박권<br>7월 15일까지 사용<br>아우로라 제외</p>
+    </div>
+  </div>
+</section>
+
+<!-- 흑백팀 공개 -->
+<section class="section" id="team">
+  <span class="section-label">TEAM</span>
+  <h2 class="section-title">흑백팀 공개</h2>
+  <div class="divider"></div>
+  <div class="team-reveal">
+    <div class="team-reveal-card white">
+      <div class="team-reveal-label">TEAM WHITE · 백팀</div>
+      <div class="team-reveal-slots" style="grid-template-columns:repeat(4,1fr);">
+        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+      </div>
+      <p class="team-coming">1주일 뒤 공개됩니다</p>
+    </div>
+    <div class="team-reveal-card black">
+      <div class="team-reveal-label">TEAM BLACK · 흑팀</div>
+      <div class="team-reveal-slots" style="grid-template-columns:repeat(4,1fr);">
+        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+      </div>
+      <p class="team-coming">1주일 뒤 공개됩니다</p>
+    </div>
+  </div>
+</section>
+
+<!-- 신청·제출 버튼 -->
+<section class="section" id="actions">
+  <span class="section-label">NEXT STEP</span>
+  <h2 class="section-title">다음 단계</h2>
+  <div class="divider"></div>
+  <div class="action-btns">
+    <a href="#" onclick="showToast(); return false;" class="btn-primary">상세 가이드라인 확인하기 →</a>
+    <button class="btn-secondary" onclick="showToast()">제출하기</button>
+  </div>
+  <p style="font-family:var(--sans); font-size:12px; color:rgba(240,237,232,0.25); text-align:center; margin-top:16px;">링크는 추후 개별 안내드립니다</p>
+</section>
+
+<!-- 푸터 -->
+<footer>
+  <div class="footer-logo">SLOW OCEAN</div>
+  <p class="footer-closing">파도 너머에서 기다리고 있겠습니다</p>
+  <p class="footer-contact">문의 · 010-6370-8078 (가급적 문자 부탁드립니다)<br>@slowocean60 · 포항 북구 화진해수욕장</p>
+</footer>
+
+</div><!-- /guide-body -->
+
+<!-- 토스트 -->
+<div class="toast" id="toast">추후 확인 가능합니다 🙏</div>
+
+<script>
+// ── 당첨자 명단 (인스타 아이디 소문자로 입력, @ 제외)
+const WINNERS = [
+  // 흑팀
+  'yeon_e_woo', 'yeondoo._.yam', 'mozzi_orzl_', 'y._.jj',
+  'chans_tour', 'warm_trip_days', 'chaesun', 'ori.qqqq',
+  'p__trend', 'aqu_a_qua', 'matory', 'hoony_0214',
+  // 백팀
+  'onestar_3910', 'love__coc0', 'kang.min.joo', 'huxxely_',
+  'chanbbo_', 'february_e_', 'bin___0812', 's_in__p',
+  'rani_luv27', 'yenni.hom', 'hamsxg', 'yumini.ne'
+];
+
+const PHONE_MAP = {
+  '01042809020': 'yeon_e_woo',
+  '01051145529': 'yeondoo._.yam',
+  '01077525897': 'mozzi_orzl_',
+  '01051041002': 'y._.jj',
+  '01099538605': 'chans_tour',
+  '01025223844': 'warm_trip_days',
+  '01087161150': 'chaesun',
+  '01055888654': 'ori.qqqq',
+  '01049400797': 'p__trend',
+  '01042824852': 'aqu_a_qua',
+  '01045245584': 'matory',
+  '01071138950': 'hoony_0214',
+  '01096868802': 'onestar_3910',
+  '01034359342': 'love__coc0',
+  '01052214405': 'kang.min.joo',
+  '01053871997': 'huxxely_',
+  '01022495968': 'chanbbo_',
+  '01086743933': 'february_e_',
+  '01026095505': 'bin___0812',
+  '01049389129': 's_in__p',
+  '01020642733': 'rani_luv27',
+  '01087955139': 'yenni.hom',
+  '01050130095': 'hamsxg',
+  '01026403923': 'yumini.ne'
+};
+
+function checkEntry() {
+  const raw = document.getElementById('insta-input').value.trim();
+  const error = document.getElementById('entry-error');
+
+  if (!raw) { error.style.display = 'block'; return; }
+
+  // 전화번호 체크 (숫자만 추출)
+  const digits = raw.replace(/[^0-9]/g, '');
+  if (digits.length >= 10 && PHONE_MAP[digits]) {
+    error.style.display = 'none';
+    showCongrats(PHONE_MAP[digits]);
+    return;
+  }
+
+  // 인스타 아이디 체크
+  const id = raw.toLowerCase().replace('@', '');
+  if (WINNERS.includes(id)) {
+    error.style.display = 'none';
+    showCongrats(id);
+  } else {
+    error.style.display = 'block';
+  }
+}
+
+function showCongrats(id) {
+  document.getElementById('entry-screen').style.display = 'none';
+  const cs = document.getElementById('congrats-screen');
+  cs.classList.add('show');
+  document.getElementById('congrats-name').innerHTML = '@' + id + ' 님';
+  spawnParticles();
+}
+
+function enterGuide() {
+  document.getElementById('congrats-screen').classList.remove('show');
+  document.getElementById('congrats-screen').style.display = 'none';
+  document.getElementById('guide-body').classList.add('show');
+  window.scrollTo(0, 0);
+}
+
+function spawnParticles() {
+  const container = document.getElementById('particles');
+  const colors = ['#c9a84c', '#e8d5a0', '#ffffff', '#3D7C8E', '#f0ede8'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.top = '-10px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.width = (Math.random() * 8 + 4) + 'px';
+    p.style.height = (Math.random() * 8 + 4) + 'px';
+    p.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+    p.style.animationDelay = (Math.random() * 1) + 's';
+    p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    container.appendChild(p);
+  }
+}
+
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// 엔터키 제출
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkEntry();
+});
+</script>
+</body>
+</html>
