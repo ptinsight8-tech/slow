@@ -842,29 +842,263 @@
 </section>
 
 <!-- 흑백팀 공개 -->
-<section class="section" id="team">
+<section class="section" id="team" style="max-width:900px;">
   <span class="section-label">TEAM</span>
   <h2 class="section-title">흑백팀 공개</h2>
   <div class="divider"></div>
-  <div class="team-reveal">
-    <div class="team-reveal-card white">
-      <div class="team-reveal-label">TEAM WHITE · 백팀</div>
-      <div class="team-reveal-slots" style="grid-template-columns:repeat(4,1fr);">
-        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
-        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
-        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+
+  <style>
+    .team-section { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:8px; }
+    .team-block { padding:32px 24px; }
+    .team-block.black-block { background:#080808; border:1px solid #1a1a1a; }
+    .team-block.white-block { background:#f0ede8; }
+    .team-block-label { font-family:var(--sans); font-size:10px; letter-spacing:0.4em; font-weight:700; margin-bottom:24px; display:block; }
+    .black-block .team-block-label { color:rgba(201,168,76,0.7); }
+    .white-block .team-block-label { color:rgba(8,8,8,0.4); }
+    .member-list { display:flex; flex-direction:column; gap:2px; }
+    .member-card {
+      display:flex; align-items:center; gap:14px;
+      padding:14px 16px;
+      cursor:pointer;
+      transition:all 0.2s;
+      text-decoration:none;
+    }
+    .black-block .member-card { background:rgba(255,255,255,0.03); }
+    .black-block .member-card:hover { background:rgba(201,168,76,0.08); }
+    .white-block .member-card { background:rgba(8,8,8,0.04); }
+    .white-block .member-card:hover { background:rgba(8,8,8,0.1); }
+    .member-avatar {
+      width:40px; height:40px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-family:var(--sans); font-size:14px; font-weight:700;
+      flex-shrink:0;
+    }
+    .black-block .member-avatar { background:rgba(201,168,76,0.15); color:var(--gold); }
+    .white-block .member-avatar { background:rgba(8,8,8,0.1); color:#333; }
+    .member-info { flex:1; }
+    .member-name { font-family:var(--sans); font-size:13px; font-weight:600; margin-bottom:0; }
+    .black-block .member-name { color:var(--white); }
+    .white-block .member-name { color:#111; }
+    .member-id { font-family:var(--sans); font-size:11px; }
+    .black-block .member-id { color:rgba(240,237,232,0.4); }
+    .white-block .member-id { color:rgba(8,8,8,0.45); }
+    .member-followers { font-family:var(--sans); font-size:11px; font-weight:600; white-space:nowrap; }
+    .black-block .member-followers { color:var(--gold); }
+    .white-block .member-followers { color:#3D7C8E; }
+    .member-arrow { font-size:12px; opacity:0.3; flex-shrink:0; }
+    .black-block .member-arrow { color:var(--white); }
+    .white-block .member-arrow { color:#111; }
+    @media(max-width:640px){ .team-section{grid-template-columns:1fr;} }
+  </style>
+
+  <div class="team-section">
+
+    <!-- 흑팀 -->
+    <div class="team-block black-block">
+      <span class="team-block-label">⬛ TEAM BLACK · 흑팀 · 12명</span>
+      <div class="member-list">
+        <a href="https://www.instagram.com/yeon_e_woo" target="_blank" class="member-card">
+          <div class="member-avatar">Y</div>
+          <div class="member-info">
+            <div class="member-name">@yeon_e_woo</div>
+          </div>
+          <div class="member-followers">2,120</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/yeondoo._.yam" target="_blank" class="member-card">
+          <div class="member-avatar">Y</div>
+          <div class="member-info">
+            <div class="member-name">@yeondoo._.yam</div>
+          </div>
+          <div class="member-followers">4,191</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/mozzi_orzl_" target="_blank" class="member-card">
+          <div class="member-avatar">M</div>
+          <div class="member-info">
+            <div class="member-name">@mozzi_orzl_</div>
+          </div>
+          <div class="member-followers">5,709</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/y._.jj" target="_blank" class="member-card">
+          <div class="member-avatar">Y</div>
+          <div class="member-info">
+            <div class="member-name">@y._.jj</div>
+          </div>
+          <div class="member-followers">1,300</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/chans_tour" target="_blank" class="member-card">
+          <div class="member-avatar">C</div>
+          <div class="member-info">
+            <div class="member-name">@chans_tour</div>
+          </div>
+          <div class="member-followers">2,900</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/warm_trip_days" target="_blank" class="member-card">
+          <div class="member-avatar">W</div>
+          <div class="member-info">
+            <div class="member-name">@warm_trip_days</div>
+          </div>
+          <div class="member-followers">2,022</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/_chaesun_" target="_blank" class="member-card">
+          <div class="member-avatar">_</div>
+          <div class="member-info">
+            <div class="member-name">@_chaesun_</div>
+          </div>
+          <div class="member-followers">6,900</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/ori.qqqq" target="_blank" class="member-card">
+          <div class="member-avatar">O</div>
+          <div class="member-info">
+            <div class="member-name">@ori.qqqq</div>
+          </div>
+          <div class="member-followers">1,190</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/p__trend" target="_blank" class="member-card">
+          <div class="member-avatar">P</div>
+          <div class="member-info">
+            <div class="member-name">@P__trend</div>
+          </div>
+          <div class="member-followers">1,215</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/aqu_a_qua" target="_blank" class="member-card">
+          <div class="member-avatar">A</div>
+          <div class="member-info">
+            <div class="member-name">@aqu_a_qua</div>
+          </div>
+          <div class="member-followers">3,113</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/_matory_" target="_blank" class="member-card">
+          <div class="member-avatar">_</div>
+          <div class="member-info">
+            <div class="member-name">@_matory_</div>
+          </div>
+          <div class="member-followers">2,577</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/hoony_0214" target="_blank" class="member-card">
+          <div class="member-avatar">H</div>
+          <div class="member-info">
+            <div class="member-name">@hoony_0214</div>
+          </div>
+          <div class="member-followers">2,307</div>
+          <div class="member-arrow">→</div>
+        </a>
       </div>
-      <p class="team-coming">1주일 뒤 공개됩니다</p>
     </div>
-    <div class="team-reveal-card black">
-      <div class="team-reveal-label">TEAM BLACK · 흑팀</div>
-      <div class="team-reveal-slots" style="grid-template-columns:repeat(4,1fr);">
-        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
-        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
-        <div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div><div class="team-slot">·</div>
+
+    <!-- 백팀 -->
+    <div class="team-block white-block">
+      <span class="team-block-label">⬜ TEAM WHITE · 백팀 · 12명</span>
+      <div class="member-list">
+        <a href="https://www.instagram.com/onestar_3910" target="_blank" class="member-card">
+          <div class="member-avatar">O</div>
+          <div class="member-info">
+            <div class="member-name">@onestar_3910</div>
+          </div>
+          <div class="member-followers">33,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/love__coc0" target="_blank" class="member-card">
+          <div class="member-avatar">L</div>
+          <div class="member-info">
+            <div class="member-name">@love__coc0</div>
+          </div>
+          <div class="member-followers">106,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/kang.min.joo" target="_blank" class="member-card">
+          <div class="member-avatar">K</div>
+          <div class="member-info">
+            <div class="member-name">@kang.min.joo</div>
+          </div>
+          <div class="member-followers">61,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/huxxely_" target="_blank" class="member-card">
+          <div class="member-avatar">H</div>
+          <div class="member-info">
+            <div class="member-name">@huxxely_</div>
+          </div>
+          <div class="member-followers">14,972</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/chanbbo_" target="_blank" class="member-card">
+          <div class="member-avatar">C</div>
+          <div class="member-info">
+            <div class="member-name">@chanbbo_</div>
+          </div>
+          <div class="member-followers">27,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/february_e_" target="_blank" class="member-card">
+          <div class="member-avatar">F</div>
+          <div class="member-info">
+            <div class="member-name">@february_e_</div>
+          </div>
+          <div class="member-followers">51,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/bin___0812" target="_blank" class="member-card">
+          <div class="member-avatar">B</div>
+          <div class="member-info">
+            <div class="member-name">@bin___0812</div>
+          </div>
+          <div class="member-followers">150,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/s_in__p" target="_blank" class="member-card">
+          <div class="member-avatar">S</div>
+          <div class="member-info">
+            <div class="member-name">@s_in__p</div>
+          </div>
+          <div class="member-followers">22,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/rani_luv27" target="_blank" class="member-card">
+          <div class="member-avatar">R</div>
+          <div class="member-info">
+            <div class="member-name">@rani_luv27</div>
+          </div>
+          <div class="member-followers">61,400</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/yenni.hom" target="_blank" class="member-card">
+          <div class="member-avatar">Y</div>
+          <div class="member-info">
+            <div class="member-name">@yenni.hom</div>
+          </div>
+          <div class="member-followers">74,700</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/hamsxg" target="_blank" class="member-card">
+          <div class="member-avatar">H</div>
+          <div class="member-info">
+            <div class="member-name">@hamsxg</div>
+          </div>
+          <div class="member-followers">34,000</div>
+          <div class="member-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/yumini.ne" target="_blank" class="member-card">
+          <div class="member-avatar">Y</div>
+          <div class="member-info">
+            <div class="member-name">@yumini.ne</div>
+          </div>
+          <div class="member-followers">24,400</div>
+          <div class="member-arrow">→</div>
+        </a>
       </div>
-      <p class="team-coming">1주일 뒤 공개됩니다</p>
     </div>
+
   </div>
 </section>
 
@@ -874,7 +1108,7 @@
   <h2 class="section-title">다음 단계</h2>
   <div class="divider"></div>
   <div class="action-btns">
-    <a href="#" onclick="showToast(); return false;" class="btn-primary">상세 가이드라인 확인하기 →</a>
+    <a href="https://www.notion.so/35322a7b21a08133b163f24fb9864f88?source=copy_link" target="_blank" class="btn-primary">상세 가이드라인 확인하기 →</a>
     <button class="btn-secondary" onclick="showToast()">제출하기</button>
   </div>
   <p style="font-family:var(--sans); font-size:12px; color:rgba(240,237,232,0.25); text-align:center; margin-top:16px;">링크는 추후 개별 안내드립니다</p>
@@ -911,7 +1145,7 @@ const PHONE_MAP = {
   '01077525897': 'mozzi_orzl_',
   '01051041002': 'y._.jj',
   '01099538605': 'chans_tour',
-  '01025223844': 'warm_trip_days',
+  '01025224384': 'warm_trip_days',
   '01087161150': 'chaesun',
   '01055888654': 'ori.qqqq',
   '01049400797': 'p__trend',
@@ -929,8 +1163,10 @@ const PHONE_MAP = {
   '01020642733': 'rani_luv27',
   '01087955139': 'yenni.hom',
   '01050130095': 'hamsxg',
-  '01026403923': 'yumini.ne'
+  '01026403923': 'yumini.ne',
+  '01063708078': 'slowocean60'
 };
+WINNERS.push('slowocean60');
 
 function checkEntry() {
   const raw = document.getElementById('insta-input').value.trim();
