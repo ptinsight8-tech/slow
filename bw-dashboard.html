@@ -22,7 +22,7 @@
 
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { background:var(--black); color:var(--white); font-family:var(--serif); overflow-x:hidden; }
+body { background:var(--black); color:var(--white); font-family:var(--serif); overflow-x:hidden; max-width:100vw; }
 
 /* ── 상단 네비 ── */
 .topnav {
@@ -616,10 +616,10 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
 }
 .mission-table th {
   font-family:var(--sans);
-  font-size:10px;
-  letter-spacing:0.1em;
+  font-size:9px;
+  letter-spacing:0.05em;
   color:rgba(240,237,232,0.3);
-  padding:10px 12px;
+  padding:8px 8px;
   text-align:center;
   border-bottom:1px solid #2a2a2a;
   font-weight:500;
@@ -628,13 +628,14 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
 .mission-table th:first-child { text-align:left; }
 .mission-table td {
   font-family:var(--sans);
-  font-size:12px;
+  font-size:11px;
   color:rgba(240,237,232,0.6);
-  padding:10px 12px;
+  padding:8px 8px;
   border-bottom:1px solid #1a1a1a;
   text-align:center;
+  white-space:nowrap;
 }
-.mission-table td:first-child { text-align:left; }
+.mission-table td:first-child { text-align:left; white-space:nowrap; }
 .check-done { color:var(--teal); font-size:14px; }
 .check-pending { color:#333; font-size:14px; }
 .mission-views {
@@ -1529,7 +1530,7 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
     </div>
 
     <!-- 미션 체크 테이블 -->
-    <div class="mission-table-wrap fade-up">
+    <div class="mission-table-wrap fade-up" style="overflow-x:auto; max-width:100%;">
       <span class="mission-table-title">참가자별 업로드 현황</span>
       <table class="mission-table">
         <thead>
@@ -2192,6 +2193,77 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.activeElement.id==='pw-input') checkPassword();
   if(e.key==='Enter'&&document.activeElement.id==='calc-upload-date') runCalculator();
 });
+
+
+// ── 구글 시트 연동 ──
+const SHEET_ID = '1XDFhCAvxbMh45ne4RLGaXS-oUHAVuEQOdBhLMa7-5HA';
+const CSV_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent('https://docs.google.com/spreadsheets/d/1XDFhCAvxbMh45ne4RLGaXS-oUHAVuEQOdBhLMa7-5HA/export?format=csv&gid=0')}`;
+
+async function fetchSheetData() {
+  try {
+    const res = await fetch(CSV_URL);
+    const text = await res.text();
+    const rows = text.split('\n').slice(1).filter(r => r.trim());
+    
+    rows.forEach(row => {
+      const cols = row.split(',').map(c => c.replace(/"/g,'').trim());
+      const insta = cols[2]; // 인스타ID 열
+      const views1 = parseInt(cols[7])||0;
+      const views2 = parseInt(cols[9])||0;
+      const views3 = parseInt(cols[11])||0;
+      const views4 = parseInt(cols[13])||0;
+      const maxViews = Math.max(views1, views2, views3, views4);
+      
+      // 흑팀 업데이트
+      const bm = BLACK_TEAM.find(m => m.insta === insta || m.id === insta.replace('@',''));
+      if(bm) { bm.done = true; bm.views = maxViews; }
+      
+      // 백팀 업데이트
+      const wm = WHITE_TEAM.find(m => m.insta === insta || m.id === insta.replace('@',''));
+      if(wm) { wm.done = true; wm.views = maxViews; }
+    });
+
+    // 팀 조회수 합산
+    SCORE.black = BLACK_TEAM.reduce((s,m) => s+m.views, 0);
+    SCORE.white = WHITE_TEAM.reduce((s,m) => s+m.views, 0);
+
+    // 화면 업데이트
+    document.getElementById('black-members').innerHTML = '';
+    document.getElementById('white-members').innerHTML = '';
+    renderMembers(BLACK_TEAM,'black-members',true);
+    renderMembers(WHITE_TEAM,'white-members',false);
+    updateScoreboard();
+    renderMissionTable();
+    updateRanking();
+
+  } catch(e) {
+    console.log('시트 연동 오류:', e);
+  }
+}
+
+function updateRanking() {
+  const all = [
+    ...BLACK_TEAM.map(m=>({...m,team:'BLACK'})),
+    ...WHITE_TEAM.map(m=>({...m,team:'WHITE'}))
+  ].filter(m=>m.views>0).sort((a,b)=>b.views-a.views).slice(0,10);
+
+  const tbody = document.getElementById('ranking-tbody');
+  if(all.length===0) {
+    tbody.innerHTML='<tr><td colspan="4" style="color:rgba(240,237,232,0.2);font-style:italic;text-align:center;padding:24px;">집계 예정</td></tr>';
+    return;
+  }
+  tbody.innerHTML = all.map((m,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td>${m.insta}</td>
+      <td><span class="rank-badge ${m.team.toLowerCase()}">${m.team}</span></td>
+      <td>${m.views.toLocaleString()}</td>
+    </tr>`).join('');
+}
+
+// 페이지 로드시 + 30초마다 갱신
+fetchSheetData();
+setInterval(fetchSheetData, 30000);
 
 // ── 스크롤 애니메이션 ──
 const observer = new IntersectionObserver(entries=>{
