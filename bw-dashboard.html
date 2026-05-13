@@ -1396,7 +1396,7 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
   <div class="hero-content">
     <div class="hero-season">SEASON 01 · 화진편</div>
     <p class="hero-tagline">숫자가 아닌, 콘텐츠의 힘으로 승부하라</p>
-    <h1 class="hero-title">흑백체험단</h1>
+    <img src="https://ptinsight8-tech.github.io/slow/LOGO.jpg" alt="흑백체험단" style="max-width:min(600px,80vw);width:100%;height:auto;display:block;margin:0 auto;">
     <p class="hero-vs">BLACK <span>VS</span> WHITE</p>
     <div class="hero-status-badge">모집중</div>
     <div class="hero-stats-row">
@@ -1419,36 +1419,7 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
 
 <!-- ── 02 · 기획 의도 ── -->
 <div id="story" style="background:var(--gray-dark);">
-  <div class="section">
-    <div class="section-header fade-up">
-      <span class="section-num">02  기획 의도</span>
-      <h2 class="section-title">SLOWOCEAN STORY</h2>
-      <div class="section-divider"></div>
-    </div>
-    <div class="story-grid fade-up">
-      <div class="story-card">
-        <img src="https://ptinsight8-tech.github.io/slow/story-01.jpg" class="story-card-img" alt="화진휴게소">
-        <div class="story-card-body">
-          <div class="story-card-title">화진휴게소에서<br>슬로우오션까지</div>
-          <p class="story-card-desc">작은 휴게소에서 시작된 우리의 이야기는 더 큰 꿈을 향해 나아갑니다. 고객의 경험을 최우선으로 생각하여 슬로우오션이 탄생했습니다.</p>
-        </div>
-      </div>
-      <div class="story-card">
-        <img src="https://ptinsight8-tech.github.io/slow/story-02.jpg" class="story-card-img" alt="왜 흑백체험단인가">
-        <div class="story-card-body">
-          <div class="story-card-title">왜 흑백체험단인가</div>
-          <p class="story-card-desc">팔로워 수는 숫자일 뿐, 결국 선택받는 것은 진짜 감동을 담아내는 콘텐츠입니다.</p>
-        </div>
-      </div>
-      <div class="story-card">
-        <img src="https://ptinsight8-tech.github.io/slow/story-03.jpg" class="story-card-img" alt="슬로우오션 × 아우로라">
-        <div class="story-card-body">
-          <div class="story-card-title">슬로우오션 × 아우로라</div>
-          <p class="story-card-desc">프리미엄 풀빌라와 감각적인 브랜드가 만나 새로운 가치를 만들어냅니다. 이번 협업을 통해 더 많은 분들에게 특별한 경험을 선사하고자 합니다.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <img src="https://ptinsight8-tech.github.io/slow/GOAL.png" alt="기획 의도" style="width:100%;display:block;">
 </div>
 
 <!-- ── 03 · 참가자 ── -->
@@ -1656,27 +1627,37 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
 
     <!-- 집계 계산기 -->
     <div class="calculator-section fade-up">
-      <span class="calc-title">집계 마감일 계산기</span>
-      <div class="calc-inputs">
-        <div class="calc-field">
-          <label>마지막 업로드 날짜</label>
-          <input type="date" class="calc-input" id="calc-upload-date">
+      <span class="calc-title">일정 계산기</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+
+        <!-- STEP 1 -->
+        <div>
+          <p style="font-family:var(--sans);font-size:11px;letter-spacing:0.25em;color:rgba(240,237,232,0.4);margin-bottom:16px;">STEP 01 · 업로드 마감일</p>
+          <div class="calc-field" style="margin-bottom:12px;">
+            <label>투숙 마지막 날짜</label>
+            <input type="date" class="calc-input" id="calc-stay-date" onchange="calcUploadDeadline2()">
+          </div>
+          <div id="upload-deadline-result" style="display:none;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);padding:16px 20px;margin-top:8px;">
+            <span style="font-family:var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--gold);display:block;margin-bottom:6px;">업로드 마감</span>
+            <span id="upload-deadline-date" style="font-family:var(--cinzel);font-size:18px;font-weight:700;color:var(--white);display:block;margin-bottom:8px;"></span>
+            <span id="upload-deadline-msg" style="font-family:var(--sans);font-size:12px;color:rgba(240,237,232,0.5);line-height:1.7;display:block;"></span>
+          </div>
         </div>
-        <div class="calc-field">
-          <label>조회수 (뷰)</label>
-          <input type="number" class="calc-input" id="calc-views" placeholder="예: 500000">
+
+        <!-- STEP 2 -->
+        <div>
+          <p style="font-family:var(--sans);font-size:11px;letter-spacing:0.25em;color:rgba(240,237,232,0.4);margin-bottom:16px;">STEP 02 · 조회수 집계일</p>
+          <div class="calc-field" style="margin-bottom:12px;">
+            <label>마지막 영상 업로드 날짜</label>
+            <input type="date" class="calc-input" id="calc-upload-date" onchange="calcScoreDeadline()">
+          </div>
+          <div id="score-deadline-result" style="display:none;background:rgba(61,124,142,0.07);border:1px solid rgba(61,124,142,0.2);padding:16px 20px;margin-top:8px;">
+            <span style="font-family:var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--teal);display:block;margin-bottom:6px;">조회수 집계 시점</span>
+            <span id="score-deadline-date" style="font-family:var(--cinzel);font-size:18px;font-weight:700;color:var(--white);display:block;margin-bottom:8px;"></span>
+            <span style="font-family:var(--sans);font-size:12px;color:rgba(240,237,232,0.5);line-height:1.7;display:block;">해당 시각 조회수 스크린샷을 제출해주세요</span>
+          </div>
         </div>
-        <button class="calc-btn" onclick="runCalculator()">계산하기</button>
-      </div>
-      <div class="calc-result-box" id="calc-result">
-        <div class="calc-result-item">
-          <span class="calc-result-label">캡처본 제출 마감</span>
-          <span class="calc-result-val" id="calc-deadline">—</span>
-        </div>
-        <div class="calc-result-item">
-          <span class="calc-result-label">기본 점수 (최고조회수 기준 입력시)</span>
-          <span class="calc-result-val gold" id="calc-base-score">—</span>
-        </div>
+
       </div>
     </div>
   </div>
@@ -1941,6 +1922,7 @@ const BLACK_TEAM = [
   {id:'ori.qqqq',       insta:'@ori.qqqq',       done:false, views:0},
   {id:'p__trend',       insta:'@P__trend',       done:false, views:0},
   {id:'aqu_a_qua',      insta:'@aqu_a_qua',      done:false, views:0},
+  {id:'test',            insta:'@TEST',           done:false, views:0},
 ];
 const WHITE_TEAM = [
   {id:'onestar_3910',  insta:'@onestar_3910',  done:false, views:0},
@@ -2063,23 +2045,29 @@ function filterGallery(team, btn) {
 }
 
 // ── 계산기 ──
-function runCalculator() {
-  const dateVal = document.getElementById('calc-upload-date').value;
-  const views = parseInt(document.getElementById('calc-views').value)||0;
-  if(!dateVal) { showToast('날짜를 입력해주세요'); return; }
-  const d = new Date(dateVal);
+function calcUploadDeadline2() {
+  const val = document.getElementById('calc-stay-date').value;
+  if(!val) return;
+  const d = new Date(val);
+  d.setDate(d.getDate()+10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  document.getElementById('upload-deadline-date').textContent = `${y}년 ${m}월 ${day}일 자정까지`;
+  document.getElementById('upload-deadline-msg').textContent = `${y}년 ${m}월 ${day}일 24:00까지 업로드를 마무리해주세요`;
+  document.getElementById('upload-deadline-result').style.display='block';
+}
+
+function calcScoreDeadline() {
+  const val = document.getElementById('calc-upload-date').value;
+  if(!val) return;
+  const d = new Date(val);
   d.setDate(d.getDate()+7);
-  const deadline = `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 낮 12시`;
-  document.getElementById('calc-deadline').textContent = deadline;
-  if(views>0) {
-    const allViews = [...BLACK_TEAM,...WHITE_TEAM].map(m=>m.views).filter(v=>v>0);
-    const maxViews = allViews.length>0 ? Math.max(...allViews,views) : views;
-    const baseScore = ((views/maxViews)*70).toFixed(1);
-    document.getElementById('calc-base-score').textContent = baseScore+'점';
-  } else {
-    document.getElementById('calc-base-score').textContent = '조회수 입력 시 계산';
-  }
-  document.getElementById('calc-result').classList.add('show');
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  document.getElementById('score-deadline-date').textContent = `${y}년 ${m}월 ${day}일 낮 12시`;
+  document.getElementById('score-deadline-result').style.display='block';
 }
 
 // ── 업로드 마감일 ──
