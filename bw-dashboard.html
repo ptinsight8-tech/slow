@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>흑백체험단 · 화진편 — SLOWOCEAN × AURORA</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --white: #f0ede8;
+  --gold: #c9a84c;
+  --gold-light: #e8d5a0;
+  --gray-dark: #141414;
+  --gray-mid: #1e1e1e;
+  --gray-light: #2a2a2a;
+  --teal: #3D7C8E;
+  --serif: 'Noto Serif KR', serif;
+  --sans: 'Noto Sans KR', sans-serif;
+  --cinzel: 'Cinzel', serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--black); color:var(--white); font-family:var(--serif); overflow-x:hidden; }
+
+/* ── 상단 네비 ── */
+.topnav {
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:1000;
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  height:56px;
+}
+.topnav-logo {
+  display:flex;
+  flex-direction:column;
+  line-height:1.2;
+}
+.topnav-logo-main {
+  font-family:var(--cinzel);
+  font-size:13px;
+  letter-spacing:0.25em;
+  color:var(--white);
+  font-weight:600;
+}
+.topnav-logo-sub {
+  font-family:var(--sans);
+  font-size:9px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.35);
+}
+.topnav-links {
+  display:flex;
+  gap:32px;
+  list-style:none;
+}
+.topnav-links a {
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:0.15em;
+  color:rgba(240,237,232,0.5);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.topnav-links a:hover { color:var(--white); }
+.topnav-btn {
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.15em;
+  padding:9px 20px;
+  border:none;
+  cursor:pointer;
+  transition:background 0.2s;
+}
+.topnav-btn:hover { background:var(--gold-light); }
+
+/* ── 히어로 ── */
+#hero {
+  position:relative;
+  height:100vh;
+  min-height:700px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.hero-bg-img {
+  position:absolute;
+  inset:0;
+  background:url('https://ptinsight8-tech.github.io/slow/hero-bg.jpg') center/cover no-repeat;
+}
+.hero-overlay {
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(8,8,8,0.3) 0%,
+    rgba(8,8,8,0.2) 40%,
+    rgba(8,8,8,0.7) 80%,
+    rgba(8,8,8,1) 100%
+  );
+}
+.hero-content {
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:0 24px;
+  max-width:800px;
+}
+.hero-season {
+  display:inline-block;
+  font-family:var(--cinzel);
+  font-size:11px;
+  letter-spacing:0.4em;
+  color:var(--gold);
+  border:1px solid rgba(201,168,76,0.4);
+  padding:6px 20px;
+  margin-bottom:20px;
+}
+.hero-tagline {
+  font-family:var(--sans);
+  font-size:14px;
+  letter-spacing:0.15em;
+  color:rgba(240,237,232,0.7);
+  margin-bottom:12px;
+}
+.hero-title {
+  font-size:clamp(72px,14vw,140px);
+  font-weight:900;
+  line-height:0.9;
+  letter-spacing:-0.02em;
+  margin-bottom:16px;
+  text-shadow:0 4px 32px rgba(0,0,0,0.8);
+}
+.hero-vs {
+  font-family:var(--cinzel);
+  font-size:clamp(14px,2.5vw,20px);
+  letter-spacing:0.6em;
+  color:rgba(240,237,232,0.6);
+  margin-bottom:24px;
+}
+.hero-vs span { color:var(--gold); }
+.hero-status-badge {
+  display:inline-block;
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.2em;
+  padding:6px 20px;
+  margin-bottom:32px;
+}
+.hero-stats-row {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  margin-bottom:28px;
+}
+.hero-stat {
+  padding:0 40px;
+  text-align:center;
+}
+.hero-stat + .hero-stat {
+  border-left:1px solid rgba(255,255,255,0.15);
+}
+.hero-stat-val {
+  font-family:var(--cinzel);
+  font-size:clamp(28px,5vw,44px);
+  font-weight:900;
+  color:var(--white);
+  display:block;
+}
+.hero-stat-label {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.4);
+  margin-top:4px;
+  display:block;
+}
+.hero-cta {
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--serif);
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  padding:16px 48px;
+  border:none;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+  transition:background 0.2s;
+  margin-bottom:32px;
+}
+.hero-cta:hover { background:var(--gold-light); }
+.hero-scroll {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+.hero-scroll-text {
+  font-family:var(--sans);
+  font-size:9px;
+  letter-spacing:0.4em;
+  color:rgba(240,237,232,0.25);
+}
+.hero-scroll-line {
+  width:1px;
+  height:40px;
+  background:linear-gradient(to bottom,rgba(240,237,232,0.3),transparent);
+  animation:scrollAnim 2s ease infinite;
+}
+@keyframes scrollAnim {
+  0%{transform:scaleY(0);transform-origin:top;}
+  50%{transform:scaleY(1);transform-origin:top;}
+  51%{transform:scaleY(1);transform-origin:bottom;}
+  100%{transform:scaleY(0);transform-origin:bottom;}
+}
+
+/* ── 섹션 공통 ── */
+.section { padding:80px 40px; max-width:1200px; margin:0 auto; }
+.section-header { margin-bottom:48px; }
+.section-num {
+  font-family:var(--cinzel);
+  font-size:11px;
+  letter-spacing:0.4em;
+  color:var(--gold);
+  display:block;
+  margin-bottom:8px;
+}
+.section-title {
+  font-size:clamp(22px,4vw,36px);
+  font-weight:700;
+  line-height:1.2;
+}
+.section-divider {
+  width:40px; height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--gold));
+  margin-top:16px;
+}
+
+/* ── 기획 의도 ── */
+#story { background:var(--gray-dark); }
+.story-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+}
+.story-card {
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.story-card-img {
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.4s ease;
+  filter:brightness(0.7);
+}
+.story-card:hover .story-card-img { transform:scale(1.05); filter:brightness(0.5); }
+.story-card-body {
+  padding:24px 20px;
+  background:var(--gray-mid);
+}
+.story-card-title {
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:10px;
+  line-height:1.4;
+}
+.story-card-desc {
+  font-family:var(--sans);
+  font-size:12px;
+  color:rgba(240,237,232,0.5);
+  line-height:1.8;
+}
+
+/* ── 참가자 ── */
+#participants { background:var(--black); }
+.team-tabs {
+  display:flex;
+  gap:2px;
+  margin-bottom:32px;
+}
+.team-tab {
+  padding:12px 32px;
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:0.2em;
+  font-weight:700;
+  cursor:pointer;
+  transition:all 0.2s;
+  border:none;
+}
+.team-tab.black-tab {
+  background:#000;
+  color:rgba(255,255,255,0.5);
+  border:1px solid #222;
+}
+.team-tab.black-tab.active {
+  background:#000;
+  color:var(--gold);
+  border-color:var(--gold);
+}
+.team-tab.white-tab {
+  background:rgba(240,237,232,0.08);
+  color:rgba(240,237,232,0.4);
+  border:1px solid #222;
+}
+.team-tab.white-tab.active {
+  background:var(--white);
+  color:#111;
+  border-color:var(--white);
+}
+.team-panel { display:none; }
+.team-panel.active { display:block; }
+.team-desc {
+  font-family:var(--sans);
+  font-size:12px;
+  color:rgba(240,237,232,0.4);
+  letter-spacing:0.1em;
+  margin-bottom:24px;
+}
+.members-grid {
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:16px;
+}
+.member-card {
+  text-align:center;
+  text-decoration:none;
+  display:block;
+  transition:transform 0.2s;
+}
+.member-card:hover { transform:translateY(-4px); }
+.member-avatar {
+  width:72px; height:72px;
+  border-radius:50%;
+  margin:0 auto 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--sans);
+  font-size:22px;
+  font-weight:700;
+  position:relative;
+}
+.member-avatar.black-av {
+  background:linear-gradient(135deg,#1a1a1a,#2a2a2a);
+  border:2px solid #333;
+  color:var(--gold);
+}
+.member-avatar.white-av {
+  background:linear-gradient(135deg,#e8e4df,#f0ede8);
+  border:2px solid #ccc;
+  color:#333;
+}
+.member-avatar .status-dot {
+  position:absolute;
+  bottom:3px; right:3px;
+  width:14px; height:14px;
+  border-radius:50%;
+  border:2px solid var(--black);
+}
+.status-dot.done { background:var(--teal); }
+.status-dot.pending { background:#444; }
+.member-id {
+  font-family:var(--sans);
+  font-size:11px;
+  color:rgba(240,237,232,0.7);
+  display:block;
+  margin-bottom:4px;
+  word-break:break-all;
+}
+.member-followers {
+  font-family:var(--cinzel);
+  font-size:11px;
+  color:var(--gold);
+  display:block;
+  margin-bottom:4px;
+}
+.member-status-text {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.1em;
+}
+.member-status-text.done { color:var(--teal); }
+.member-status-text.pending { color:rgba(240,237,232,0.25); }
+.view-all-btn {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:32px;
+  background:transparent;
+  border:1px solid #2a2a2a;
+  color:rgba(240,237,232,0.4);
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:0.15em;
+  padding:12px 24px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-decoration:none;
+}
+.view-all-btn:hover { border-color:#444; color:var(--white); }
+
+/* ── 현황판 ── */
+#scoreboard { background:var(--gray-dark); }
+.scoreboard-wrap { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+.scoreboard-left {}
+.scoreboard-right {}
+
+/* VS 스코어 */
+.vs-box {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:0;
+  margin-bottom:24px;
+  align-items:center;
+}
+.vs-team {
+  padding:32px 24px;
+  text-align:center;
+}
+.vs-team.black-vs { background:#000; border:1px solid #1a1a1a; }
+.vs-team.white-vs { background:var(--white); }
+.vs-team-label {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.3em;
+  display:block;
+  margin-bottom:10px;
+}
+.black-vs .vs-team-label { color:rgba(255,255,255,0.4); }
+.white-vs .vs-team-label { color:rgba(8,8,8,0.4); }
+.vs-score {
+  font-family:var(--cinzel);
+  font-size:clamp(24px,4vw,40px);
+  font-weight:900;
+  display:block;
+}
+.black-vs .vs-score { color:var(--gold); }
+.white-vs .vs-score { color:#111; }
+.vs-center {
+  background:var(--gold);
+  padding:32px 20px;
+  text-align:center;
+}
+.vs-center-text {
+  font-family:var(--cinzel);
+  font-size:18px;
+  font-weight:900;
+  color:var(--black);
+  display:block;
+}
+.vs-center-sub {
+  font-family:var(--sans);
+  font-size:9px;
+  letter-spacing:0.2em;
+  color:rgba(8,8,8,0.5);
+  display:block;
+  margin-top:4px;
+}
+
+/* 바 */
+.score-bar-row {
+  background:var(--gray-mid);
+  padding:20px 24px;
+  margin-bottom:24px;
+}
+.score-bar-labels {
+  display:flex;
+  justify-content:space-between;
+  font-family:var(--sans);
+  font-size:11px;
+  color:rgba(240,237,232,0.4);
+  margin-bottom:10px;
+}
+.score-bar-track {
+  height:6px;
+  background:#111;
+  position:relative;
+  overflow:hidden;
+}
+.score-bar-fill-black {
+  position:absolute;
+  left:0; top:0; bottom:0;
+  background:var(--gold);
+  transition:width 1.5s ease;
+}
+.score-bar-fill-white {
+  position:absolute;
+  right:0; top:0; bottom:0;
+  background:var(--teal);
+  transition:width 1.5s ease;
+}
+
+/* 바 차트 */
+.bar-chart {
+  background:var(--gray-mid);
+  padding:24px;
+  margin-bottom:24px;
+}
+.bar-chart-title {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.4);
+  margin-bottom:16px;
+}
+.bar-chart-area {
+  display:flex;
+  align-items:flex-end;
+  gap:24px;
+  height:120px;
+  padding-bottom:8px;
+}
+.bar-item {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  flex:1;
+}
+.bar-fill {
+  width:100%;
+  transition:height 1.5s ease;
+  min-height:4px;
+}
+.bar-fill.black-bar { background:var(--gold); }
+.bar-fill.white-bar { background:var(--teal); }
+.bar-val {
+  font-family:var(--cinzel);
+  font-size:11px;
+  color:rgba(240,237,232,0.6);
+}
+.bar-label {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.15em;
+  color:rgba(240,237,232,0.3);
+}
+
+/* 랭킹 테이블 */
+.ranking-box { background:var(--gray-mid); padding:24px; }
+.ranking-title {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.4);
+  margin-bottom:16px;
+}
+.ranking-table {
+  width:100%;
+  border-collapse:collapse;
+}
+.ranking-table th {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.15em;
+  color:rgba(240,237,232,0.3);
+  padding:8px 12px;
+  text-align:left;
+  border-bottom:1px solid #2a2a2a;
+  font-weight:500;
+}
+.ranking-table td {
+  font-family:var(--sans);
+  font-size:12px;
+  color:rgba(240,237,232,0.65);
+  padding:10px 12px;
+  border-bottom:1px solid #1a1a1a;
+}
+.ranking-table td:first-child {
+  font-family:var(--cinzel);
+  color:var(--gold);
+  font-weight:700;
+}
+.rank-badge {
+  display:inline-block;
+  font-size:9px;
+  letter-spacing:0.1em;
+  padding:2px 8px;
+}
+.rank-badge.black { background:#000; color:var(--gold); border:1px solid #333; }
+.rank-badge.white { background:var(--white); color:#111; }
+
+/* 미션 테이블 */
+.mission-table-wrap { margin-top:32px; }
+.mission-table-title {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.4);
+  margin-bottom:16px;
+}
+.mission-table {
+  width:100%;
+  border-collapse:collapse;
+}
+.mission-table th {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.1em;
+  color:rgba(240,237,232,0.3);
+  padding:10px 12px;
+  text-align:center;
+  border-bottom:1px solid #2a2a2a;
+  font-weight:500;
+  white-space:nowrap;
+}
+.mission-table th:first-child { text-align:left; }
+.mission-table td {
+  font-family:var(--sans);
+  font-size:12px;
+  color:rgba(240,237,232,0.6);
+  padding:10px 12px;
+  border-bottom:1px solid #1a1a1a;
+  text-align:center;
+}
+.mission-table td:first-child { text-align:left; }
+.check-done { color:var(--teal); font-size:14px; }
+.check-pending { color:#333; font-size:14px; }
+.mission-views {
+  font-family:var(--cinzel);
+  font-size:12px;
+  color:var(--gold);
+}
+
+/* ── 영상 모음 ── */
+#gallery { background:var(--black); }
+.gallery-filters {
+  display:flex;
+  gap:8px;
+  margin-bottom:28px;
+  flex-wrap:wrap;
+}
+.gallery-filter-btn {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.15em;
+  padding:8px 20px;
+  border:1px solid #222;
+  background:transparent;
+  color:rgba(240,237,232,0.4);
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.gallery-filter-btn.active, .gallery-filter-btn:hover {
+  background:var(--gold);
+  color:var(--black);
+  border-color:var(--gold);
+  font-weight:700;
+}
+.gallery-grid {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+.gallery-card {
+  position:relative;
+  background:var(--gray-mid);
+  cursor:pointer;
+  text-decoration:none;
+  display:block;
+  transition:transform 0.2s;
+}
+.gallery-card:hover { transform:scale(1.02); }
+.gallery-thumb {
+  width:100%;
+  aspect-ratio:9/16;
+  object-fit:cover;
+  display:block;
+  background:var(--gray-light);
+}
+.gallery-thumb-placeholder {
+  width:100%;
+  aspect-ratio:9/16;
+  background:var(--gray-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  opacity:0.3;
+}
+.gallery-play {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-70%);
+  width:40px; height:40px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.7);
+  border:2px solid rgba(255,255,255,0.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+}
+.gallery-info {
+  padding:10px 12px;
+}
+.gallery-id {
+  font-family:var(--sans);
+  font-size:11px;
+  color:rgba(240,237,232,0.7);
+  display:block;
+  margin-bottom:2px;
+}
+.gallery-views {
+  font-family:var(--cinzel);
+  font-size:12px;
+  color:var(--gold);
+}
+.gallery-team-dot {
+  position:absolute;
+  top:8px; left:8px;
+  width:8px; height:8px;
+  border-radius:50%;
+}
+.gallery-team-dot.black { background:var(--gold); }
+.gallery-team-dot.white { background:var(--teal); }
+.gallery-empty {
+  grid-column:1/-1;
+  padding:60px;
+  text-align:center;
+  border:1px dashed #222;
+}
+.gallery-empty p {
+  font-family:var(--sans);
+  font-size:13px;
+  color:rgba(240,237,232,0.2);
+  letter-spacing:0.1em;
+}
+.view-more-btn {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:24px;
+  background:transparent;
+  border:1px solid #222;
+  color:rgba(240,237,232,0.4);
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:0.15em;
+  padding:12px 24px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.view-more-btn:hover { border-color:#444; color:var(--white); }
+
+/* ── 최종 결과 ── */
+#result { background:var(--gray-dark); }
+.result-grid {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:0;
+  align-items:center;
+}
+.result-team {
+  padding:60px 40px;
+  text-align:center;
+}
+.result-team.black-result { background:#000; border:1px solid #1a1a1a; }
+.result-team.white-result { background:rgba(240,237,232,0.05); border:1px solid #1a1a1a; }
+.result-team-label {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.3em;
+  color:rgba(240,237,232,0.3);
+  display:block;
+  margin-bottom:16px;
+}
+.result-team-score {
+  font-family:var(--cinzel);
+  font-size:48px;
+  font-weight:900;
+  color:rgba(240,237,232,0.15);
+  display:block;
+}
+.result-center {
+  padding:60px 40px;
+  text-align:center;
+  background:var(--gray-mid);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+.result-trophy {
+  width:120px;
+  opacity:0.6;
+  filter:grayscale(30%);
+}
+.result-winner-text {
+  font-family:var(--cinzel);
+  font-size:22px;
+  font-weight:900;
+  color:var(--gold);
+  letter-spacing:0.2em;
+}
+.result-coming {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.25);
+}
+
+/* ── 집계 방식 설명 ── */
+#scoring { background:var(--black); }
+.scoring-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+}
+.scoring-card {
+  background:var(--gray-dark);
+  padding:40px;
+}
+.scoring-card-label {
+  font-family:var(--cinzel);
+  font-size:10px;
+  letter-spacing:0.4em;
+  color:var(--gold);
+  display:block;
+  margin-bottom:12px;
+}
+.scoring-card-title {
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+.scoring-formula {
+  background:var(--gray-mid);
+  padding:20px 24px;
+  margin-bottom:16px;
+  border-left:3px solid var(--gold);
+}
+.scoring-formula-text {
+  font-family:var(--cinzel);
+  font-size:18px;
+  font-weight:700;
+  color:var(--gold);
+  display:block;
+  margin-bottom:6px;
+}
+.scoring-formula-desc {
+  font-family:var(--sans);
+  font-size:12px;
+  color:rgba(240,237,232,0.45);
+  line-height:1.7;
+}
+.bonus-table {
+  width:100%;
+  border-collapse:collapse;
+}
+.bonus-table td {
+  font-family:var(--sans);
+  font-size:13px;
+  padding:10px 12px;
+  border-bottom:1px solid #1a1a1a;
+  color:rgba(240,237,232,0.65);
+}
+.bonus-table td:last-child {
+  text-align:right;
+  font-family:var(--cinzel);
+  color:var(--gold);
+  font-weight:700;
+}
+
+/* ── 집계 계산기 ── */
+.calculator-section {
+  background:var(--gray-dark);
+  padding:40px;
+  margin-top:2px;
+}
+.calc-title {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.3em;
+  color:var(--gold);
+  margin-bottom:20px;
+  display:block;
+}
+.calc-inputs {
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:12px;
+  align-items:flex-end;
+  margin-bottom:20px;
+}
+.calc-field label {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.4);
+  display:block;
+  margin-bottom:8px;
+}
+.calc-input {
+  width:100%;
+  background:var(--gray-mid);
+  border:1px solid #2a2a2a;
+  color:var(--white);
+  font-family:var(--sans);
+  font-size:14px;
+  padding:12px 14px;
+  outline:none;
+  transition:border-color 0.2s;
+  color-scheme:dark;
+}
+.calc-input:focus { border-color:var(--gold); }
+.calc-btn {
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--sans);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  padding:12px 24px;
+  border:none;
+  cursor:pointer;
+  white-space:nowrap;
+  height:fit-content;
+}
+.calc-result-box {
+  display:none;
+  background:rgba(201,168,76,0.07);
+  border:1px solid rgba(201,168,76,0.2);
+  padding:20px 24px;
+}
+.calc-result-box.show { display:flex; gap:40px; align-items:center; flex-wrap:wrap; }
+.calc-result-item {}
+.calc-result-label {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.3em;
+  color:rgba(240,237,232,0.4);
+  display:block;
+  margin-bottom:6px;
+}
+.calc-result-val {
+  font-family:var(--cinzel);
+  font-size:20px;
+  font-weight:700;
+  color:var(--white);
+}
+.calc-result-val.gold { color:var(--gold); }
+
+/* ── 참가자 로그인 ── */
+#participant-zone {
+  background:var(--gray-dark);
+  border-top:1px solid rgba(201,168,76,0.15);
+}
+.login-wrap {
+  max-width:480px;
+  margin:0 auto;
+  text-align:center;
+}
+.login-desc {
+  font-family:var(--sans);
+  font-size:13px;
+  color:rgba(240,237,232,0.4);
+  line-height:1.9;
+  margin-bottom:40px;
+}
+.login-methods {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:24px;
+}
+.login-method-btn {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:var(--gray-mid);
+  border:1px solid #2a2a2a;
+  padding:16px 24px;
+  cursor:pointer;
+  transition:border-color 0.2s;
+  text-align:left;
+  width:100%;
+}
+.login-method-btn:hover { border-color:var(--gold); }
+.login-method-icon { font-size:20px; }
+.login-method-text {
+  font-family:var(--sans);
+  font-size:13px;
+  color:rgba(240,237,232,0.6);
+  letter-spacing:0.1em;
+}
+.login-or {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:rgba(240,237,232,0.2);
+  margin:8px 0;
+}
+.pw-input-wrap {
+  margin-top:24px;
+  text-align:left;
+}
+.pw-label {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.3em;
+  color:var(--gold);
+  display:block;
+  margin-bottom:10px;
+}
+.pw-input {
+  width:100%;
+  background:var(--gray-mid);
+  border:1px solid #2a2a2a;
+  color:var(--white);
+  font-family:var(--serif);
+  font-size:20px;
+  padding:14px 16px;
+  outline:none;
+  transition:border-color 0.2s;
+  letter-spacing:0.3em;
+  text-align:center;
+}
+.pw-input:focus { border-color:var(--gold); }
+.pw-btn {
+  width:100%;
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--serif);
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  padding:16px;
+  border:none;
+  cursor:pointer;
+  margin-top:12px;
+  transition:background 0.2s;
+}
+.pw-btn:hover { background:var(--gold-light); }
+.pw-error {
+  font-family:var(--sans);
+  font-size:12px;
+  color:#c06060;
+  margin-top:10px;
+  display:none;
+  text-align:center;
+}
+
+/* ── 참가자 전용 콘텐츠 ── */
+#participant-content { display:none; }
+#participant-content.show { display:block; }
+
+/* 제출 폼 */
+.submit-section {
+  background:var(--black);
+  padding:80px 40px;
+  max-width:1200px;
+  margin:0 auto;
+}
+.submit-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+}
+.submit-block {}
+.submit-block-title {
+  font-family:var(--cinzel);
+  font-size:11px;
+  letter-spacing:0.4em;
+  color:var(--gold);
+  display:block;
+  margin-bottom:20px;
+  padding-bottom:12px;
+  border-bottom:1px solid #1a1a1a;
+}
+
+/* 콘텐츠 행 */
+.content-row {
+  background:var(--gray-dark);
+  padding:20px;
+  margin-bottom:2px;
+}
+.content-row-title {
+  font-family:var(--sans);
+  font-size:12px;
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.content-row-num {
+  font-family:var(--cinzel);
+  font-size:10px;
+  color:var(--gold);
+  letter-spacing:0.2em;
+}
+.content-row-inputs {
+  display:grid;
+  grid-template-columns:1fr 120px;
+  gap:8px;
+}
+.form-input {
+  width:100%;
+  background:var(--gray-mid);
+  border:1px solid #2a2a2a;
+  color:var(--white);
+  font-family:var(--sans);
+  font-size:13px;
+  padding:11px 14px;
+  outline:none;
+  transition:border-color 0.2s;
+}
+.form-input:focus { border-color:var(--gold); }
+.form-input::placeholder { color:rgba(240,237,232,0.2); font-size:12px; }
+.form-label {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.25em;
+  color:rgba(240,237,232,0.4);
+  display:block;
+  margin-bottom:8px;
+}
+
+/* 다채널 */
+.bonus-channels {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.bonus-channel-row {
+  background:var(--gray-dark);
+  padding:16px 20px;
+  display:grid;
+  grid-template-columns:auto 60px 1fr;
+  gap:12px;
+  align-items:center;
+}
+.bonus-channel-check {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.channel-checkbox {
+  width:18px; height:18px;
+  accent-color:var(--gold);
+  cursor:pointer;
+}
+.channel-name {
+  font-family:var(--sans);
+  font-size:13px;
+  color:rgba(240,237,232,0.65);
+}
+.channel-weight {
+  font-family:var(--cinzel);
+  font-size:12px;
+  color:var(--gold);
+  text-align:center;
+}
+.channel-url-input {
+  width:100%;
+  background:var(--gray-mid);
+  border:1px solid #2a2a2a;
+  color:var(--white);
+  font-family:var(--sans);
+  font-size:12px;
+  padding:9px 12px;
+  outline:none;
+  transition:border-color 0.2s;
+  display:none;
+}
+.channel-url-input.show { display:block; }
+.channel-url-input:focus { border-color:var(--gold); }
+.channel-url-input::placeholder { color:rgba(240,237,232,0.2); }
+
+/* 설문 */
+.survey-block {
+  background:var(--gray-dark);
+  padding:28px;
+  margin-bottom:2px;
+}
+.survey-label {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.25em;
+  color:var(--gold);
+  display:block;
+  margin-bottom:12px;
+}
+.survey-textarea {
+  width:100%;
+  background:var(--gray-mid);
+  border:1px solid #2a2a2a;
+  color:var(--white);
+  font-family:var(--sans);
+  font-size:13px;
+  padding:12px 14px;
+  outline:none;
+  min-height:100px;
+  resize:vertical;
+  line-height:1.7;
+  transition:border-color 0.2s;
+}
+.survey-textarea:focus { border-color:var(--gold); }
+.survey-textarea::placeholder { color:rgba(240,237,232,0.2); font-size:12px; }
+
+/* 마감일 계산 */
+.deadline-display {
+  background:rgba(201,168,76,0.07);
+  border:1px solid rgba(201,168,76,0.2);
+  padding:16px 20px;
+  margin-top:16px;
+  display:none;
+}
+.deadline-display.show { display:flex; align-items:center; gap:16px; }
+.deadline-label {
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.25em;
+  color:var(--gold);
+}
+.deadline-date {
+  font-family:var(--cinzel);
+  font-size:16px;
+  font-weight:700;
+  color:var(--white);
+}
+
+/* 제출 버튼 */
+.submit-btn-wrap {
+  margin-top:40px;
+  text-align:center;
+}
+.submit-btn {
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--serif);
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  padding:18px 60px;
+  border:none;
+  cursor:pointer;
+  transition:background 0.2s;
+}
+.submit-btn:hover { background:var(--gold-light); }
+
+/* ── 클로징 ── */
+#closing {
+  background:var(--black);
+  padding:100px 40px;
+  text-align:center;
+  border-top:1px solid #111;
+}
+.closing-title {
+  font-size:clamp(20px,3.5vw,36px);
+  font-weight:300;
+  font-style:italic;
+  color:rgba(240,237,232,0.7);
+  margin-bottom:12px;
+  line-height:1.6;
+}
+.closing-brand {
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.3em;
+  color:rgba(240,237,232,0.2);
+  margin-bottom:16px;
+}
+.closing-next {
+  display:inline-block;
+  font-family:var(--cinzel);
+  font-size:10px;
+  letter-spacing:0.3em;
+  color:var(--gold);
+  border:1px solid rgba(201,168,76,0.2);
+  padding:8px 24px;
+  margin-bottom:40px;
+}
+.closing-btns {
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.btn-primary {
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--serif);
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0.08em;
+  padding:14px 36px;
+  text-decoration:none;
+  display:inline-block;
+  transition:background 0.2s;
+}
+.btn-primary:hover { background:var(--gold-light); }
+.btn-ghost {
+  background:transparent;
+  color:rgba(240,237,232,0.4);
+  font-family:var(--sans);
+  font-size:13px;
+  letter-spacing:0.1em;
+  padding:14px 28px;
+  border:1px solid #222;
+  text-decoration:none;
+  display:inline-block;
+  transition:all 0.2s;
+}
+.btn-ghost:hover { border-color:#444; color:var(--white); }
+
+/* 토스트 */
+.toast {
+  position:fixed;
+  bottom:32px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--gray-dark);
+  border:1px solid rgba(201,168,76,0.25);
+  color:var(--white);
+  font-family:var(--sans);
+  font-size:13px;
+  padding:14px 28px;
+  opacity:0;
+  transition:all 0.3s;
+  z-index:9000;
+  white-space:nowrap;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* 스크롤 애니메이션 */
+.fade-up {
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible { opacity:1; transform:translateY(0); }
+
+/* 반응형 */
+@media(max-width:900px) {
+  .topnav-links { display:none; }
+  .section { padding:60px 20px; }
+  .story-grid { grid-template-columns:1fr; }
+  .members-grid { grid-template-columns:repeat(3,1fr); }
+  .scoreboard-wrap { grid-template-columns:1fr; }
+  .scoring-grid { grid-template-columns:1fr; }
+  .submit-grid { grid-template-columns:1fr; }
+  .gallery-grid { grid-template-columns:repeat(2,1fr); }
+  .result-grid { grid-template-columns:1fr; }
+  .calc-inputs { grid-template-columns:1fr; }
+  .vs-box { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── 상단 네비 ── -->
+<nav class="topnav">
+  <div class="topnav-logo">
+    <span class="topnav-logo-main">SLOWOCEAN</span>
+    <span class="topnav-logo-sub">× AURORA</span>
+  </div>
+  <ul class="topnav-links">
+    <li><a href="#story">기획 의도</a></li>
+    <li><a href="#participants">참가자</a></li>
+    <li><a href="#scoreboard">콘텐츠 현황</a></li>
+    <li><a href="#gallery">영상 모음</a></li>
+    <li><a href="#result">결과 발표</a></li>
+  </ul>
+  <button class="topnav-btn" onclick="scrollToLogin()">참가자 로그인</button>
+</nav>
+
+<!-- ── 01 · 히어로 ── -->
+<section id="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-season">SEASON 01 · 화진편</div>
+    <p class="hero-tagline">숫자가 아닌, 콘텐츠의 힘으로 승부하라</p>
+    <h1 class="hero-title">흑백체험단</h1>
+    <p class="hero-vs">BLACK <span>VS</span> WHITE</p>
+    <div class="hero-status-badge">모집중</div>
+    <div class="hero-stats-row">
+      <div class="hero-stat">
+        <span class="hero-stat-val">—</span>
+        <span class="hero-stat-label">총 참가자 수</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-val" id="hero-total-views">집계중</span>
+        <span class="hero-stat-label">총 누적 조회수</span>
+      </div>
+    </div>
+    <a href="#participants" class="hero-cta">참가자 보기 →</a>
+    <div class="hero-scroll">
+      <span class="hero-scroll-text">SCROLL DOWN</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 · 기획 의도 ── -->
+<div id="story" style="background:var(--gray-dark);">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">02  기획 의도</span>
+      <h2 class="section-title">SLOWOCEAN STORY</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="story-grid fade-up">
+      <div class="story-card">
+        <img src="https://ptinsight8-tech.github.io/slow/story-01.jpg" class="story-card-img" alt="화진휴게소">
+        <div class="story-card-body">
+          <div class="story-card-title">화진휴게소에서<br>슬로우오션까지</div>
+          <p class="story-card-desc">작은 휴게소에서 시작된 우리의 이야기는 더 큰 꿈을 향해 나아갑니다. 고객의 경험을 최우선으로 생각하여 슬로우오션이 탄생했습니다.</p>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="https://ptinsight8-tech.github.io/slow/story-02.jpg" class="story-card-img" alt="왜 흑백체험단인가">
+        <div class="story-card-body">
+          <div class="story-card-title">왜 흑백체험단인가</div>
+          <p class="story-card-desc">팔로워 수는 숫자일 뿐, 결국 선택받는 것은 진짜 감동을 담아내는 콘텐츠입니다.</p>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="https://ptinsight8-tech.github.io/slow/story-03.jpg" class="story-card-img" alt="슬로우오션 × 아우로라">
+        <div class="story-card-body">
+          <div class="story-card-title">슬로우오션 × 아우로라</div>
+          <p class="story-card-desc">프리미엄 풀빌라와 감각적인 브랜드가 만나 새로운 가치를 만들어냅니다. 이번 협업을 통해 더 많은 분들에게 특별한 경험을 선사하고자 합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 03 · 참가자 ── -->
+<div id="participants" style="background:var(--black);">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">03  참가자 소개</span>
+      <div class="section-divider"></div>
+    </div>
+    <div class="team-tabs fade-up">
+      <button class="team-tab black-tab active" onclick="switchTeam('black')">⬛ BLACK TEAM (7)</button>
+      <button class="team-tab white-tab" onclick="switchTeam('white')">⬜ WHITE TEAM (8)</button>
+    </div>
+
+    <!-- 흑팀 -->
+    <div class="team-panel active" id="panel-black">
+      <p class="team-desc">⬛ BLACK TEAM · 7명</p>
+      <div class="members-grid" id="black-members"></div>
+    </div>
+
+    <!-- 백팀 -->
+    <div class="team-panel" id="panel-white">
+      <p class="team-desc">⬜ WHITE TEAM · 8명</p>
+      <div class="members-grid" id="white-members"></div>
+    </div>
+
+    <a href="#" class="view-all-btn fade-up">전체 참가자 보기 →</a>
+  </div>
+</div>
+
+<!-- ── 04 · 현황판 ── -->
+<div id="scoreboard" style="background:var(--gray-dark);">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">04  콘텐츠 현황판</span>
+      <h2 class="section-title">LIVE SCOREBOARD</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- VS -->
+    <div class="vs-box fade-up">
+      <div class="vs-team black-vs">
+        <span class="vs-team-label">BLACK TEAM</span>
+        <span class="vs-score" id="black-score">—</span>
+      </div>
+      <div class="vs-center">
+        <span class="vs-center-text">VS</span>
+        <span class="vs-center-sub">LIVE</span>
+      </div>
+      <div class="vs-team white-vs">
+        <span class="vs-team-label">WHITE TEAM</span>
+        <span class="vs-score" id="white-score" style="color:#111;">—</span>
+      </div>
+    </div>
+
+    <!-- 바 -->
+    <div class="score-bar-row fade-up">
+      <div class="score-bar-labels">
+        <span><span id="black-pct">50</span>%</span>
+        <span><span id="white-pct">50</span>%</span>
+      </div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill-black" id="bar-black" style="width:50%;"></div>
+        <div class="score-bar-fill-white" id="bar-white" style="width:50%;"></div>
+      </div>
+    </div>
+
+    <div class="scoreboard-wrap fade-up">
+      <!-- 바 차트 -->
+      <div>
+        <div class="bar-chart">
+          <span class="bar-chart-title">팀별 조회수 합산</span>
+          <div class="bar-chart-area" id="bar-chart-area">
+            <div class="bar-item">
+              <span class="bar-val" id="bar-black-val">0</span>
+              <div class="bar-fill black-bar" id="bar-black-fill" style="height:4px;"></div>
+              <span class="bar-label">BLACK TEAM</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-val" id="bar-white-val">0</span>
+              <div class="bar-fill white-bar" id="bar-white-fill" style="height:4px;"></div>
+              <span class="bar-label">WHITE TEAM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOP 10 랭킹 -->
+      <div class="ranking-box">
+        <span class="ranking-title">개인 조회수 TOP 10</span>
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>순위</th>
+              <th>참가자</th>
+              <th>팀</th>
+              <th>조회수</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-tbody">
+            <tr>
+              <td colspan="4" style="color:rgba(240,237,232,0.2);font-style:italic;text-align:center;padding:24px;">집계 예정</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 미션 체크 테이블 -->
+    <div class="mission-table-wrap fade-up">
+      <span class="mission-table-title">참가자별 업로드 현황</span>
+      <table class="mission-table">
+        <thead>
+          <tr>
+            <th>참가자</th>
+            <th>팀</th>
+            <th>릴스 1</th>
+            <th>릴스 2</th>
+            <th>릴스 3</th>
+            <th>화진</th>
+            <th>A컷</th>
+            <th>설문</th>
+            <th>최종 조회수</th>
+          </tr>
+        </thead>
+        <tbody id="mission-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── 05 · 영상 모음 ── -->
+<div id="gallery" style="background:var(--black);">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">05  참가자 영상 모음</span>
+      <div class="section-divider"></div>
+    </div>
+    <div class="gallery-filters fade-up">
+      <button class="gallery-filter-btn active" onclick="filterGallery('all',this)">전체</button>
+      <button class="gallery-filter-btn" onclick="filterGallery('black',this)">BLACK TEAM</button>
+      <button class="gallery-filter-btn" onclick="filterGallery('white',this)">WHITE TEAM</button>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+      <div class="gallery-empty">
+        <p>업로드된 영상이 없습니다<br>참가자들의 릴스가 올라오면 이곳에 표시됩니다</p>
+      </div>
+    </div>
+    <button class="view-more-btn fade-up" id="load-more-btn" style="display:none;">더 많은 영상 보기 →</button>
+  </div>
+</div>
+
+<!-- ── 06 · 집계 방식 ── -->
+<div id="scoring" style="background:var(--black);border-top:1px solid #111;">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">집계 방식 안내</span>
+      <h2 class="section-title">점수는 이렇게 계산합니다</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="scoring-grid fade-up">
+      <div class="scoring-card">
+        <span class="scoring-card-label">BASE SCORE · 70점</span>
+        <div class="scoring-card-title">기본 점수</div>
+        <div class="scoring-formula">
+          <span class="scoring-formula-text">전체 최고 조회수 = 70점</span>
+          <span class="scoring-formula-desc">전체 24명 중 조회수 1위 참가자가 70점 기준이 됩니다.<br>나머지는 (본인 조회수 ÷ 최고 조회수) × 70으로 계산.</span>
+        </div>
+        <div class="scoring-formula" style="border-left-color:var(--teal);">
+          <span class="scoring-formula-text" style="color:var(--teal);font-size:14px;">예시</span>
+          <span class="scoring-formula-desc">
+            최고 조회수 100만뷰 → 70점<br>
+            50만뷰 → 35점<br>
+            20만뷰 → 14점
+          </span>
+        </div>
+        <p style="font-family:var(--sans);font-size:12px;color:rgba(240,237,232,0.3);line-height:1.8;margin-top:16px;">
+          흑팀·백팀 구분 없이 전체 24명 동일 기준 적용.<br>
+          업로드 기간 내 가장 높은 조회수로 집계.
+        </p>
+      </div>
+
+      <div class="scoring-card">
+        <span class="scoring-card-label">BONUS SCORE · 30점</span>
+        <div class="scoring-card-title">다채널 보너스</div>
+        <table class="bonus-table" style="margin-bottom:20px;">
+          <tr><td>블로그</td><td>9점</td></tr>
+          <tr><td>유튜브</td><td>9점</td></tr>
+          <tr><td>네이버플레이스</td><td>3점</td></tr>
+          <tr><td>당근</td><td>3점</td></tr>
+          <tr><td>틱톡</td><td>3점</td></tr>
+          <tr><td>스레드</td><td>3점</td></tr>
+          <tr style="border-top:1px solid #2a2a2a;"><td style="color:var(--white);font-weight:700;">최대 합계</td><td>30점</td></tr>
+        </table>
+        <p style="font-family:var(--sans);font-size:12px;color:rgba(240,237,232,0.3);line-height:1.8;">
+          채널별 링크 제출 확인 후 점수 부여.<br>
+          집계 기준: 업로드 마감 후 7일 시점 스크린샷
+        </p>
+        <div class="scoring-formula" style="margin-top:16px;border-left-color:var(--teal);">
+          <span class="scoring-formula-text" style="color:var(--teal);font-size:14px;">최종 점수</span>
+          <span class="scoring-formula-desc">기본점수 (최대 70) + 보너스점수 (최대 30) = 최대 100점</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 집계 계산기 -->
+    <div class="calculator-section fade-up">
+      <span class="calc-title">집계 마감일 계산기</span>
+      <div class="calc-inputs">
+        <div class="calc-field">
+          <label>마지막 업로드 날짜</label>
+          <input type="date" class="calc-input" id="calc-upload-date">
+        </div>
+        <div class="calc-field">
+          <label>조회수 (뷰)</label>
+          <input type="number" class="calc-input" id="calc-views" placeholder="예: 500000">
+        </div>
+        <button class="calc-btn" onclick="runCalculator()">계산하기</button>
+      </div>
+      <div class="calc-result-box" id="calc-result">
+        <div class="calc-result-item">
+          <span class="calc-result-label">캡처본 제출 마감</span>
+          <span class="calc-result-val" id="calc-deadline">—</span>
+        </div>
+        <div class="calc-result-item">
+          <span class="calc-result-label">기본 점수 (최고조회수 기준 입력시)</span>
+          <span class="calc-result-val gold" id="calc-base-score">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 07 · 최종 결과 ── -->
+<div id="result" style="background:var(--gray-dark);">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">최종 결과 발표</span>
+      <h2 class="section-title">FINAL RESULT</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="result-grid fade-up">
+      <div class="result-team black-result">
+        <span class="result-team-label">BLACK TEAM</span>
+        <span class="result-team-score">—</span>
+      </div>
+      <div class="result-center">
+        <img src="https://ptinsight8-tech.github.io/slow/TROPI.jpg" class="result-trophy" alt="trophy">
+        <span class="result-winner-text">WINNER</span>
+        <span class="result-coming">이벤트 종료 후 공개됩니다</span>
+      </div>
+      <div class="result-team white-result">
+        <span class="result-team-label">WHITE TEAM</span>
+        <span class="result-team-score">—</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 08 · 참가자 로그인 ── -->
+<div id="participant-zone" style="background:var(--gray-dark);border-top:1px solid rgba(201,168,76,0.15);">
+  <div class="section">
+    <div class="section-header fade-up" style="text-align:center;">
+      <span class="section-num" style="text-align:center;display:block;">참가자 전용</span>
+      <h2 class="section-title" style="text-align:center;">참가자 전용 페이지입니다</h2>
+      <div class="section-divider" style="margin:16px auto 0;"></div>
+    </div>
+
+    <div id="login-gate" class="fade-up">
+      <div class="login-wrap">
+        <p class="login-desc">인증 후 이용해주세요</p>
+        <div class="pw-input-wrap">
+          <label class="pw-label">비밀번호</label>
+          <input type="password" class="pw-input" id="pw-input" placeholder="· · · ·" maxlength="4">
+          <button class="pw-btn" onclick="checkPassword()">확인하기 →</button>
+          <p class="pw-error" id="pw-error">비밀번호가 올바르지 않습니다</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 참가자 전용 콘텐츠 -->
+    <div id="participant-content">
+
+      <!-- 제출 폼 -->
+      <div class="submit-section">
+        <div class="section-header">
+          <span class="section-num">콘텐츠 제출</span>
+          <h2 class="section-title" style="font-size:24px;">투숙 후 제출 폼</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="submit-grid">
+          <!-- 왼쪽 -->
+          <div class="submit-block">
+
+            <!-- 기본 정보 -->
+            <span class="submit-block-title">① 기본 정보</span>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+              <div>
+                <label class="form-label">이름</label>
+                <input type="text" class="form-input" id="f-name" placeholder="실명">
+              </div>
+              <div>
+                <label class="form-label">인스타그램 아이디</label>
+                <input type="text" class="form-input" id="f-insta" placeholder="@아이디">
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+              <div>
+                <label class="form-label">히든포레스트 투숙일</label>
+                <input type="date" class="form-input" id="f-hidden-date" onchange="calcUploadDeadline()" style="color-scheme:dark;">
+              </div>
+              <div>
+                <label class="form-label">웨일 객실 투숙일</label>
+                <input type="date" class="form-input" id="f-whale-date" onchange="calcUploadDeadline()" style="color-scheme:dark;">
+              </div>
+            </div>
+            <div class="deadline-display" id="deadline-display">
+              <span class="deadline-label">업로드 마감일</span>
+              <span class="deadline-date" id="deadline-date">—</span>
+            </div>
+
+            <!-- 콘텐츠 업로드 -->
+            <span class="submit-block-title" style="margin-top:32px;">② 콘텐츠 업로드</span>
+
+            <div class="content-row">
+              <div class="content-row-title"><span class="content-row-num">01</span>히든포레스트 릴스</div>
+              <div class="content-row-inputs">
+                <input type="url" class="form-input" id="reel-hidden" placeholder="https://www.instagram.com/reel/...">
+                <input type="number" class="form-input" id="views-hidden" placeholder="조회수">
+              </div>
+            </div>
+            <div class="content-row">
+              <div class="content-row-title"><span class="content-row-num">02</span>웨일 객실 릴스</div>
+              <div class="content-row-inputs">
+                <input type="url" class="form-input" id="reel-whale" placeholder="https://www.instagram.com/reel/...">
+                <input type="number" class="form-input" id="views-whale" placeholder="조회수">
+              </div>
+            </div>
+            <div class="content-row">
+              <div class="content-row-title"><span class="content-row-num">03</span>아우로라 카페 릴스</div>
+              <div class="content-row-inputs">
+                <input type="url" class="form-input" id="reel-aurora" placeholder="https://www.instagram.com/reel/...">
+                <input type="number" class="form-input" id="views-aurora" placeholder="조회수">
+              </div>
+            </div>
+            <div class="content-row">
+              <div class="content-row-title"><span class="content-row-num">04</span>화진해수욕장 콘텐츠</div>
+              <div class="content-row-inputs">
+                <input type="url" class="form-input" id="reel-hwajin" placeholder="https://www.instagram.com/...">
+                <input type="number" class="form-input" id="views-hwajin" placeholder="조회수">
+              </div>
+            </div>
+
+            <!-- A컷 -->
+            <span class="submit-block-title" style="margin-top:32px;">④ A컷 클립·사진 제출</span>
+            <div style="background:var(--gray-dark);padding:20px;">
+              <label class="form-label">구글 드라이브 링크</label>
+              <input type="url" class="form-input" id="drive-link" placeholder="https://drive.google.com/...">
+              <p style="font-family:var(--sans);font-size:11px;color:rgba(240,237,232,0.3);margin-top:10px;line-height:1.7;">
+                클립 각 10개 · 사진 각 10개 + 조회수 캡처본 함께 업로드해주세요
+              </p>
+            </div>
+
+
+
+          </div>
+
+          <!-- 오른쪽 -->
+          <div class="submit-block">
+
+            <!-- 다채널 보너스 -->
+            <span class="submit-block-title">③ 다채널 보너스 <span style="color:rgba(240,237,232,0.3);font-size:10px;letter-spacing:0.1em;">선택</span></span>
+            <div class="bonus-channels">
+              <div class="bonus-channel-row">
+                <div class="bonus-channel-check">
+                  <input type="checkbox" class="channel-checkbox" id="ch-blog" onchange="toggleChannel('blog')">
+                  <label class="channel-name" for="ch-blog">블로그</label>
+                </div>
+                <span class="channel-weight">9점</span>
+                <input type="url" class="channel-url-input" id="url-blog" placeholder="블로그 URL">
+              </div>
+              <div class="bonus-channel-row">
+                <div class="bonus-channel-check">
+                  <input type="checkbox" class="channel-checkbox" id="ch-youtube" onchange="toggleChannel('youtube')">
+                  <label class="channel-name" for="ch-youtube">유튜브</label>
+                </div>
+                <span class="channel-weight">9점</span>
+                <input type="url" class="channel-url-input" id="url-youtube" placeholder="유튜브 URL">
+              </div>
+              <div class="bonus-channel-row">
+                <div class="bonus-channel-check">
+                  <input type="checkbox" class="channel-checkbox" id="ch-place" onchange="toggleChannel('place')">
+                  <label class="channel-name" for="ch-place">네이버플레이스</label>
+                </div>
+                <span class="channel-weight">3점</span>
+                <input type="url" class="channel-url-input" id="url-place" placeholder="플레이스 URL">
+              </div>
+              <div class="bonus-channel-row">
+                <div class="bonus-channel-check">
+                  <input type="checkbox" class="channel-checkbox" id="ch-karrot" onchange="toggleChannel('karrot')">
+                  <label class="channel-name" for="ch-karrot">당근</label>
+                </div>
+                <span class="channel-weight">3점</span>
+                <input type="url" class="channel-url-input" id="url-karrot" placeholder="당근 URL">
+              </div>
+              <div class="bonus-channel-row">
+                <div class="bonus-channel-check">
+                  <input type="checkbox" class="channel-checkbox" id="ch-tiktok" onchange="toggleChannel('tiktok')">
+                  <label class="channel-name" for="ch-tiktok">틱톡</label>
+                </div>
+                <span class="channel-weight">3점</span>
+                <input type="url" class="channel-url-input" id="url-tiktok" placeholder="틱톡 URL">
+              </div>
+              <div class="bonus-channel-row">
+                <div class="bonus-channel-check">
+                  <input type="checkbox" class="channel-checkbox" id="ch-threads" onchange="toggleChannel('threads')">
+                  <label class="channel-name" for="ch-threads">스레드</label>
+                </div>
+                <span class="channel-weight">3점</span>
+                <input type="url" class="channel-url-input" id="url-threads" placeholder="스레드 URL">
+              </div>
+            </div>
+
+            <!-- 예상 보너스 점수 -->
+            <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);padding:16px 20px;margin-top:2px;">
+              <span style="font-family:var(--sans);font-size:11px;letter-spacing:0.2em;color:rgba(240,237,232,0.4);">예상 보너스 점수</span>
+              <span id="bonus-score" style="font-family:var(--cinzel);font-size:24px;font-weight:700;color:var(--gold);display:block;margin-top:4px;">0점 / 30점</span>
+            </div>
+
+            <!-- 후기 설문 -->
+            <span class="submit-block-title" style="margin-top:32px;">⑥ 후기 설문</span>
+            <div class="survey-block">
+              <label class="survey-label">흑백체험단 전반 후기</label>
+              <textarea class="survey-textarea" id="review-event" placeholder="체험단에 참여하며 느낀 점을 자유롭게 적어주세요"></textarea>
+            </div>
+            <div class="survey-block">
+              <label class="survey-label">시즌 2에 바라는 점</label>
+              <textarea class="survey-textarea" id="review-season2" placeholder="다음 시즌을 위한 조언이나 제안을 적어주세요"></textarea>
+            </div>
+            <div class="survey-block">
+              <label class="survey-label">객실 불편사항 / 개선사항</label>
+              <textarea class="survey-textarea" id="review-room" placeholder="개선이 필요한 부분을 솔직하게 적어주세요"></textarea>
+            </div>
+            <div class="survey-block">
+              <label class="survey-label">좋았던 점</label>
+              <textarea class="survey-textarea" id="review-good" placeholder="특히 좋았던 경험을 적어주세요"></textarea>
+            </div>
+            <div class="survey-block">
+              <label class="survey-label">숙소 사장에게 한마디</label>
+              <textarea class="survey-textarea" id="review-to-owner" placeholder="슬로우오션 사장님께 전하고 싶은 말"></textarea>
+            </div>
+            <div class="survey-block">
+              <label class="survey-label">아우로라 사장에게 한마디</label>
+              <textarea class="survey-textarea" id="review-to-aurora" placeholder="아우로라 사장님께 전하고 싶은 말"></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="submit-btn-wrap">
+          <button class="submit-btn" onclick="submitAll()">제출하기 →</button>
+        </div>
+      </div>
+
+    </div><!-- /participant-content -->
+  </div>
+</div>
+
+<!-- ── 클로징 ── -->
+<section id="closing">
+  <p class="closing-title">파도 너머에서<br>기다리고 있겠습니다</p>
+  <p class="closing-brand">SLOWOCEAN × AURORA · 포항 북구 화진해수욕장</p>
+  <div class="closing-next">SEASON 02 · 7번 국도편 예정</div>
+  <div class="closing-btns">
+    <a href="https://naver.me/G9r5hRha" target="_blank" class="btn-primary">슬로우오션 예약하기</a>
+    <a href="https://www.instagram.com/slowocean60" target="_blank" class="btn-ghost">@slowocean60</a>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── 데이터 ──
+const BLACK_TEAM = [
+  {id:'yeon_e_woo',     insta:'@yeon_e_woo',     done:false, views:0},
+  {id:'yeondoo._.yam',  insta:'@yeondoo._.yam',  done:false, views:0},
+  {id:'y._.jj',         insta:'@y._.jj',         done:false, views:0},
+  {id:'warm_trip_days', insta:'@warm_trip_days', done:false, views:0},
+  {id:'ori.qqqq',       insta:'@ori.qqqq',       done:false, views:0},
+  {id:'p__trend',       insta:'@P__trend',       done:false, views:0},
+  {id:'aqu_a_qua',      insta:'@aqu_a_qua',      done:false, views:0},
+];
+const WHITE_TEAM = [
+  {id:'onestar_3910',  insta:'@onestar_3910',  done:false, views:0},
+  {id:'kang.min.joo',  insta:'@kang.min.joo',  done:false, views:0},
+  {id:'huxxely_',      insta:'@huxxely_',      done:false, views:0},
+  {id:'chanbbo_',      insta:'@chanbbo_',      done:false, views:0},
+  {id:'bin___0812',    insta:'@bin___0812',    done:false, views:0},
+  {id:'s_in__p',       insta:'@s_in__p',       done:false, views:0},
+  {id:'hamsxg',        insta:'@hamsxg',        done:false, views:0},
+  {id:'yumini.ne',     insta:'@yumini.ne',     done:false, views:0},
+];
+
+// 수동 업데이트 (현황판)
+const SCORE = { black:0, white:0 };
+const GALLERY_DATA = []; // 릴스 올라오면 채움
+
+function fmt(n) {
+  if(n>=10000) return (n/10000).toFixed(1)+'만';
+  return n.toLocaleString();
+}
+
+// ── 참가자 렌더링 ──
+function renderMembers(team, containerId, isBlack) {
+  const el = document.getElementById(containerId);
+  team.forEach(m => {
+    const initial = m.insta.replace('@','')[0].toUpperCase();
+    const avClass = isBlack ? 'black-av' : 'white-av';
+    const dotClass = m.done ? 'done' : 'pending';
+    const statusText = m.done ? '✓ 완료' : '· 예정';
+    const statusClass = m.done ? 'done' : 'pending';
+    el.innerHTML += `
+      <a href="https://www.instagram.com/${m.id}" target="_blank" class="member-card">
+        <div class="member-avatar ${avClass}">
+          ${initial}
+          <span class="status-dot ${dotClass}"></span>
+        </div>
+        <span class="member-id">${m.insta}</span>
+        <span class="member-status-text ${statusClass}">${statusText}</span>
+      </a>`;
+  });
+}
+renderMembers(BLACK_TEAM,'black-members',true);
+renderMembers(WHITE_TEAM,'white-members',false);
+
+function switchTeam(team) {
+  document.querySelectorAll('.team-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.team-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelector('.'+team+'-tab').classList.add('active');
+  document.getElementById('panel-'+team).classList.add('active');
+}
+
+// ── 현황판 ──
+function updateScoreboard() {
+  const bv = SCORE.black, wv = SCORE.white, total = bv+wv;
+  document.getElementById('black-score').textContent = bv>0 ? bv.toLocaleString() : '—';
+  document.getElementById('white-score').textContent = wv>0 ? wv.toLocaleString() : '—';
+  document.getElementById('bar-black-val').textContent = bv>0 ? bv.toLocaleString() : '0';
+  document.getElementById('bar-white-val').textContent = wv>0 ? wv.toLocaleString() : '0';
+  document.getElementById('hero-total-views').textContent = total>0 ? total.toLocaleString() : '집계중';
+  if(total>0) {
+    const bp=Math.round(bv/total*100), wp=100-bp;
+    document.getElementById('black-pct').textContent=bp;
+    document.getElementById('white-pct').textContent=wp;
+    document.getElementById('bar-black').style.width=bp+'%';
+    document.getElementById('bar-white').style.width=wp+'%';
+    const maxH=100;
+    document.getElementById('bar-black-fill').style.height=(bv/total*maxH)+'px';
+    document.getElementById('bar-white-fill').style.height=(wv/total*maxH)+'px';
+  }
+}
+updateScoreboard();
+
+// ── 미션 테이블 ──
+function renderMissionTable() {
+  const tbody = document.getElementById('mission-tbody');
+  const all = [
+    ...BLACK_TEAM.map(m=>({...m,team:'BLACK'})),
+    ...WHITE_TEAM.map(m=>({...m,team:'WHITE'}))
+  ];
+  tbody.innerHTML = all.map(m=>`
+    <tr>
+      <td>${m.insta}</td>
+      <td><span class="rank-badge ${m.team.toLowerCase()}">${m.team}</span></td>
+      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
+      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
+      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
+      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
+      <td class="check-pending">·</td>
+      <td class="check-pending">·</td>
+      <td class="mission-views">${m.views>0?m.views.toLocaleString():'—'}</td>
+    </tr>`).join('');
+}
+renderMissionTable();
+
+// ── 갤러리 ──
+function renderGallery(filter='all') {
+  const grid = document.getElementById('gallery-grid');
+  const filtered = filter==='all' ? GALLERY_DATA : GALLERY_DATA.filter(g=>g.team===filter);
+  if(filtered.length===0) {
+    grid.innerHTML='<div class="gallery-empty"><p>업로드된 영상이 없습니다<br>참가자들의 릴스가 올라오면 이곳에 표시됩니다</p></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(g=>`
+    <a href="${g.url}" target="_blank" class="gallery-card" data-team="${g.team}">
+      <div class="gallery-thumb-placeholder">▶</div>
+      <div class="gallery-team-dot ${g.team}"></div>
+      <div class="gallery-play">▶</div>
+      <div class="gallery-info">
+        <span class="gallery-id">${g.id}</span>
+        <span class="gallery-views">${g.views.toLocaleString()}</span>
+      </div>
+    </a>`).join('');
+}
+renderGallery();
+
+function filterGallery(team, btn) {
+  document.querySelectorAll('.gallery-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGallery(team);
+}
+
+// ── 계산기 ──
+function runCalculator() {
+  const dateVal = document.getElementById('calc-upload-date').value;
+  const views = parseInt(document.getElementById('calc-views').value)||0;
+  if(!dateVal) { showToast('날짜를 입력해주세요'); return; }
+  const d = new Date(dateVal);
+  d.setDate(d.getDate()+7);
+  const deadline = `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 낮 12시`;
+  document.getElementById('calc-deadline').textContent = deadline;
+  if(views>0) {
+    const allViews = [...BLACK_TEAM,...WHITE_TEAM].map(m=>m.views).filter(v=>v>0);
+    const maxViews = allViews.length>0 ? Math.max(...allViews,views) : views;
+    const baseScore = ((views/maxViews)*70).toFixed(1);
+    document.getElementById('calc-base-score').textContent = baseScore+'점';
+  } else {
+    document.getElementById('calc-base-score').textContent = '조회수 입력 시 계산';
+  }
+  document.getElementById('calc-result').classList.add('show');
+}
+
+// ── 업로드 마감일 ──
+function calcUploadDeadline() {
+  const h = document.getElementById('f-hidden-date').value;
+  const w = document.getElementById('f-whale-date').value;
+  const dates = [h,w].filter(Boolean).map(d=>new Date(d));
+  if(dates.length===0) return;
+  const last = new Date(Math.max(...dates));
+  last.setDate(last.getDate()+10);
+  document.getElementById('deadline-date').textContent =
+    `${last.getFullYear()}년 ${last.getMonth()+1}월 ${last.getDate()}일까지`;
+  document.getElementById('deadline-display').classList.add('show');
+}
+
+// ── 다채널 보너스 ──
+const CHANNEL_WEIGHTS = {blog:9,youtube:9,place:3,karrot:3,tiktok:3,threads:3};
+function toggleChannel(ch) {
+  const checked = document.getElementById('ch-'+ch).checked;
+  const urlInput = document.getElementById('url-'+ch);
+  urlInput.classList.toggle('show',checked);
+  updateBonusScore();
+}
+function updateBonusScore() {
+  let total=0;
+  Object.keys(CHANNEL_WEIGHTS).forEach(ch=>{
+    if(document.getElementById('ch-'+ch).checked) total+=CHANNEL_WEIGHTS[ch];
+  });
+  document.getElementById('bonus-score').textContent = total+'점 / 30점';
+}
+
+// ── 비밀번호 ──
+function checkPassword() {
+  const pw = document.getElementById('pw-input').value;
+  const err = document.getElementById('pw-error');
+  if(pw==='6060') {
+    document.getElementById('login-gate').style.display='none';
+    document.getElementById('participant-content').style.display='block';
+    err.style.display='none';
+  } else {
+    err.style.display='block';
+  }
+}
+
+function scrollToLogin() {
+  document.getElementById('participant-zone').scrollIntoView({behavior:'smooth'});
+}
+
+// ── 제출 ──
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyy510eWbuPfzilZe6hm6UzKsOQvGb0eGFZvd7vP-X2RdQDsQ7XU4t1L2h8KdOyR8F6/exec';
+
+async function submitAll() {
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = '제출 중...';
+  btn.disabled = true;
+
+  const data = {
+    name: document.getElementById('f-name').value,
+    insta: document.getElementById('f-insta').value,
+    hiddenDate: document.getElementById('f-hidden-date').value,
+    whaleDate: document.getElementById('f-whale-date').value,
+    deadline: document.getElementById('deadline-date').textContent,
+    reel1: document.getElementById('reel-hidden').value,
+    views1: document.getElementById('views-hidden').value,
+    reel2: document.getElementById('reel-whale').value,
+    views2: document.getElementById('views-whale').value,
+    reel3: document.getElementById('reel-aurora').value,
+    views3: document.getElementById('views-aurora').value,
+    reel4: document.getElementById('reel-hwajin').value,
+    views4: document.getElementById('views-hwajin').value,
+    blog: document.getElementById('url-blog').value,
+    youtube: document.getElementById('url-youtube').value,
+    place: document.getElementById('url-place').value,
+    karrot: document.getElementById('url-karrot').value,
+    tiktok: document.getElementById('url-tiktok').value,
+    threads: document.getElementById('url-threads').value,
+    bonusScore: document.getElementById('bonus-score').textContent,
+    driveLink: document.getElementById('drive-link').value,
+
+    reviewEvent: document.getElementById('review-event').value,
+    reviewSeason2: document.getElementById('review-season2').value,
+    reviewRoom: document.getElementById('review-room').value,
+    reviewGood: document.getElementById('review-good').value,
+    reviewOwner: document.getElementById('review-to-owner').value,
+    reviewAurora: document.getElementById('review-to-aurora').value,
+  };
+
+  // 필수 항목 체크
+  if(!data.insta || !data.reel1) {
+    showToast('인스타 아이디와 필수 릴스 URL을 입력해주세요');
+    btn.textContent = '제출하기 →';
+    btn.disabled = false;
+    return;
+  }
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    showToast('제출이 완료되었습니다 🙏');
+    btn.textContent = '제출 완료 ✓';
+  } catch(err) {
+    showToast('오류가 발생했습니다. 다시 시도해주세요');
+    btn.textContent = '제출하기 →';
+    btn.disabled = false;
+  }
+}
+
+// ── 토스트 ──
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── 엔터키 ──
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&document.activeElement.id==='pw-input') checkPassword();
+  if(e.key==='Enter'&&document.activeElement.id==='calc-upload-date') runCalculator();
+});
+
+// ── 스크롤 애니메이션 ──
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
