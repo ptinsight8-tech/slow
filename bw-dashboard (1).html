@@ -1384,6 +1384,7 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
     <li><a href="#story">기획 의도</a></li>
     <li><a href="#participants">참가자</a></li>
     <li><a href="#scoreboard">콘텐츠 현황</a></li>
+    <li><a href="#gallery">영상 모음</a></li>
     <li><a href="#result">결과 발표</a></li>
   </ul>
   <button class="topnav-btn" onclick="scrollToLogin()">참가자 로그인</button>
@@ -1396,7 +1397,7 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
   <div class="hero-content">
     <div class="hero-season">SEASON 01 · 화진편</div>
     <p class="hero-tagline">숫자가 아닌, 콘텐츠의 힘으로 승부하라</p>
-
+    <img src="https://ptinsight8-tech.github.io/slow/LOGO.jpg" alt="흑백체험단" style="max-width:min(600px,80vw);width:100%;height:auto;display:block;margin:0 auto;">
     <p class="hero-vs">BLACK <span>VS</span> WHITE</p>
     <div class="hero-status-badge">모집중</div>
     <div class="hero-stats-row">
@@ -1548,6 +1549,27 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
         <tbody id="mission-tbody"></tbody>
       </table>
     </div>
+  </div>
+</div>
+
+<!-- ── 05 · 영상 모음 ── -->
+<div id="gallery" style="background:var(--black);">
+  <div class="section">
+    <div class="section-header fade-up">
+      <span class="section-num">05  참가자 영상 모음</span>
+      <div class="section-divider"></div>
+    </div>
+    <div class="gallery-filters fade-up">
+      <button class="gallery-filter-btn active" onclick="filterGallery('all',this)">전체</button>
+      <button class="gallery-filter-btn" onclick="filterGallery('black',this)">BLACK TEAM</button>
+      <button class="gallery-filter-btn" onclick="filterGallery('white',this)">WHITE TEAM</button>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+      <div class="gallery-empty">
+        <p>업로드된 영상이 없습니다<br>참가자들의 릴스가 올라오면 이곳에 표시됩니다</p>
+      </div>
+    </div>
+    <button class="view-more-btn fade-up" id="load-more-btn" style="display:none;">더 많은 영상 보기 →</button>
   </div>
 </div>
 
@@ -1767,28 +1789,25 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
             <span class="submit-block-title" style="margin-top:32px;">④ A컷 클립·사진 제출</span>
             <div style="background:var(--gray-dark);padding:20px 20px 16px;">
               <p style="font-family:var(--sans);font-size:11px;color:rgba(240,237,232,0.35);line-height:1.9;margin-bottom:16px;">
-                클립 각 10개 · 사진 각 10개 + 조회수 캡처본 · 참가자 이름 버튼을 눌러 업로드해주세요<br>
+                클립 각 10개 · 사진 각 10개 + 조회수 캡처본 · 본인 이름 버튼을 눌러 업로드해주세요<br>
                 많이 챙겨주시면 너무 감사하게 사용하겠습니다. b컷이나 아쉽게 영상에 사용 안 된 사진, 컷들 챙겨주시면 감사드리겠습니다 :)
               </p>
-              <div id="acut-members-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
-            </div>
-
-            <!-- 업로드 모달 -->
-            <div id="upload-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
-              <div style="background:var(--gray-dark);border:1px solid rgba(201,168,76,0.25);padding:32px;max-width:480px;width:90%;position:relative;">
-                <button onclick="closeUploadModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(240,237,232,0.4);font-size:20px;cursor:pointer;line-height:1;">✕</button>
-                <div style="font-family:var(--cinzel);font-size:10px;letter-spacing:0.4em;color:var(--gold);margin-bottom:6px;">A컷 업로드</div>
-                <div id="modal-member-name" style="font-size:18px;font-weight:700;margin-bottom:20px;"></div>
-                <div style="border:1px solid rgba(201,168,76,0.15);padding:24px 20px;text-align:center;margin-bottom:16px;">
-                  <div style="font-size:36px;margin-bottom:12px;">📂</div>
-                  <div style="font-family:var(--sans);font-size:13px;color:rgba(240,237,232,0.5);line-height:2;">
-                    버튼을 누르면 전용 폴더가 <strong style="color:var(--white);">새 탭</strong>으로 열려요<br>
-                    <span style="font-size:11px;opacity:0.7;">모바일은 드라이브 앱에서 갤러리 바로 연결</span>
-                  </div>
-                </div>
-                <button onclick="openFolder()" style="width:100%;background:var(--gold);color:var(--black);font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:0.1em;padding:14px;border:none;cursor:pointer;">
-                  폴더 열기 →
-                </button>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+                <a href="https://drive.google.com/drive/folders/1Nzl3P_wKZkbYh15TvQuHWYiLB_ipB7q_" target="_blank" style="background:#111;border:1px solid #2a2a2a;color:var(--gold);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬛<br>@yeon_e_woo</a>
+                <a href="https://drive.google.com/drive/folders/1uGUrCJbj0aLhxBR7KhVTe_zgEx6a8CNL" target="_blank" style="background:#111;border:1px solid #2a2a2a;color:var(--gold);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬛<br>@yeondoo._.yam</a>
+                <a href="https://drive.google.com/drive/folders/1SDQzA_Wf3sc-SZBYOplhkh1TayFOqPcb" target="_blank" style="background:#111;border:1px solid #2a2a2a;color:var(--gold);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬛<br>@y._.jj</a>
+                <a href="https://drive.google.com/drive/folders/1B7IRNyxeU4oThe0jtfw5UDpq55OKjfTB" target="_blank" style="background:#111;border:1px solid #2a2a2a;color:var(--gold);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬛<br>@warm_trip_days</a>
+                <a href="https://drive.google.com/drive/folders/1Y9R5ENADrp2FTXmaIL31PC1ZNQM0KT6J" target="_blank" style="background:#111;border:1px solid #2a2a2a;color:var(--gold);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬛<br>@ori.qqqq</a>
+                <a href="https://drive.google.com/drive/folders/1Lqy_jr1CT8Qp0V6RP-IpH-ygw9iOr9ZP" target="_blank" style="background:#111;border:1px solid #2a2a2a;color:var(--gold);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬛<br>@P__trend</a>
+                <a href="https://drive.google.com/drive/folders/1G33LjnVwAi65gNb-OAv24eQ1xd3A9BBd" target="_blank" style="background:#111;border:1px solid #2a2a2a;color:var(--gold);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬛<br>@aqu_a_qua</a>
+                <a href="https://drive.google.com/drive/folders/1WO-_de73c75hvvuywyXcGeQ4g8egscWx" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@onestar_3910</a>
+                <a href="https://drive.google.com/drive/folders/150Z6Vk3Nz7x6kExK50Re_KyxlfIuKMj0" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@kang.min.joo</a>
+                <a href="https://drive.google.com/drive/folders/1j-kGaE1A2M5PPfhz97C3g3hNb-5m9wYi" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@huxxely_</a>
+                <a href="https://drive.google.com/drive/folders/11fY_p9Kryn3gfrgzDfg4BJ_1jAiQFv-B" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@chanbbo_</a>
+                <a href="https://drive.google.com/drive/folders/1hKv6k4HVhfzIh0YPsHQEJ6JZ9u7DSnyR" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@bin___0812</a>
+                <a href="https://drive.google.com/drive/folders/1ll3rbNwBBEWfbFkiri1QxxeDM9Zu-Qrz" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@s_in__p</a>
+                <a href="https://drive.google.com/drive/folders/1-9uWOLLCcCORLnH_hvFtxuSEppEVsQLj" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@hamsxg</a>
+                <a href="https://drive.google.com/drive/folders/1mnlHDY6CIKCl0dHu5szDuglRSnwukwp2" target="_blank" style="background:rgba(240,237,232,0.05);border:1px solid #2a2a2a;color:var(--teal);font-family:var(--sans);font-size:10px;padding:12px 8px;text-align:center;text-decoration:none;display:block;transition:border-color 0.2s;line-height:1.7;">⬜<br>@yumini.ne</a>
               </div>
             </div>
 
@@ -1909,61 +1928,6 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
 </section>
 
 <div class="toast" id="toast"></div>
-
-<style>
-.acut-btn { background:var(--gray-mid);border:1px solid #2a2a2a;color:rgba(240,237,232,0.7);font-family:var(--sans);font-size:11px;padding:12px 8px;cursor:pointer;transition:all 0.2s;text-align:center;width:100%;line-height:1.6; }
-.acut-btn:hover { border-color:var(--gold);color:var(--white); }
-.acut-btn .acut-team { display:block;font-size:10px;margin-bottom:2px; }
-.acut-btn .acut-id { display:block;font-size:10px;word-break:break-all; }
-</style>
-
-<script>
-const ACUT_MEMBERS = [
-  {id:'yeon_e_woo',    team:'black', folderId:'1Nzl3P_wKZkbYh15TvQuHWYiLB_ipB7q_'},
-  {id:'yeondoo._.yam', team:'black', folderId:'1uGUrCJbj0aLhxBR7KhVTe_zgEx6a8CNL'},
-  {id:'y._.jj',        team:'black', folderId:'1SDQzA_Wf3sc-SZBYOplhkh1TayFOqPcb'},
-  {id:'warm_trip_days',team:'black', folderId:'1B7IRNyxeU4oThe0jtfw5UDpq55OKjfTB'},
-  {id:'ori.qqqq',      team:'black', folderId:'1Y9R5ENADrp2FTXmaIL31PC1ZNQM0KT6J'},
-  {id:'P__trend',      team:'black', folderId:'1Lqy_jr1CT8Qp0V6RP-IpH-ygw9iOr9ZP'},
-  {id:'aqu_a_qua',     team:'black', folderId:'1G33LjnVwAi65gNb-OAv24eQ1xd3A9BBd'},
-  {id:'onestar_3910',  team:'white', folderId:'1WO-_de73c75hvvuywyXcGeQ4g8egscWx'},
-  {id:'kang.min.joo',  team:'white', folderId:'150Z6Vk3Nz7x6kExK50Re_KyxlfIuKMj0'},
-  {id:'huxxely_',      team:'white', folderId:'1j-kGaE1A2M5PPfhz97C3g3hNb-5m9wYi'},
-  {id:'chanbbo_',      team:'white', folderId:'11fY_p9Kryn3gfrgzDfg4BJ_1jAiQFv-B'},
-  {id:'bin___0812',    team:'white', folderId:'1hKv6k4HVhfzIh0YPsHQEJ6JZ9u7DSnyR'},
-  {id:'s_in__p',       team:'white', folderId:'1ll3rbNwBBEWfbFkiri1QxxeDM9Zu-Qrz'},
-  {id:'hamsxg',        team:'white', folderId:'1-9uWOLLCcCORLnH_hvFtxuSEppEVsQLj'},
-  {id:'yumini.ne',     team:'white', folderId:'1mnlHDY6CIKCl0dHu5szDuglRSnwukwp2'},
-];
-let currentMember = null;
-
-function renderAcutGrid() {
-  const grid = document.getElementById('acut-members-grid');
-  if(!grid) return;
-  grid.innerHTML = ACUT_MEMBERS.map(m => {
-    const c = m.team === 'black' ? 'var(--gold)' : 'var(--teal)';
-    return `<button class="acut-btn" onclick="openUploadModal('${m.id}')">
-      <span class="acut-team" style="color:${c};">${m.team==='black'?'⬛ BLACK':'⬜ WHITE'}</span>
-      <span class="acut-id">@${m.id}</span>
-    </button>`;
-  }).join('');
-}
-function openUploadModal(memberId) {
-  currentMember = ACUT_MEMBERS.find(m => m.id === memberId);
-  document.getElementById('modal-member-name').textContent = '@' + memberId;
-  document.getElementById('upload-modal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-function closeUploadModal() {
-  document.getElementById('upload-modal').style.display = 'none';
-  document.body.style.overflow = '';
-}
-function openFolder() {
-  if(!currentMember) return;
-  window.open('https://drive.google.com/drive/folders/' + currentMember.folderId, '_blank');
-}
-document.addEventListener('DOMContentLoaded', renderAcutGrid);
-</script>
 
 <script>
 // ── 데이터 ──
