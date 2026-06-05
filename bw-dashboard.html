@@ -1535,15 +1535,17 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
       <table class="mission-table">
         <thead>
           <tr>
-            <th>참가자</th>
+            <th>이름</th>
+            <th>인스타</th>
             <th>팀</th>
-            <th>릴스 1</th>
-            <th>릴스 2</th>
-            <th>릴스 3</th>
-            <th>화진</th>
-            <th>A컷</th>
-            <th>설문</th>
-            <th>최종 조회수</th>
+            <th>릴스1<br>히든</th>
+            <th>릴스2<br>웨일</th>
+            <th>릴스3<br>아우로라</th>
+            <th>릴스4<br>화진</th>
+            <th>A컷<br>제출</th>
+            <th>1차<br>완료</th>
+            <th>게시물<br>유지</th>
+            <th>2차<br>완료</th>
           </tr>
         </thead>
         <tbody id="mission-tbody"></tbody>
@@ -1916,29 +1918,42 @@ body { background:var(--black); color:var(--white); font-family:var(--serif); ov
 <script>
 // ── 데이터 ──
 const BLACK_TEAM = [
-  {id:'yeon_e_woo',     insta:'@yeon_e_woo',     done:false, views:0},
-  {id:'yeondoo._.yam',  insta:'@yeondoo._.yam',  done:false, views:0},
-  {id:'y._.jj',         insta:'@y._.jj',         done:false, views:0},
-  {id:'warm_trip_days', insta:'@warm_trip_days', done:false, views:0},
-  {id:'ori.qqqq',       insta:'@ori.qqqq',       done:false, views:0},
-  {id:'p__trend',       insta:'@P__trend',       done:false, views:0},
-  {id:'aqu_a_qua',      insta:'@aqu_a_qua',      done:false, views:0},
-  {id:'test',            insta:'@TEST',           done:false, views:0},
+  {id:'yeon_e_woo',     name:'우소연', insta:'@yeon_e_woo',     done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'yeondoo._.yam',  name:'정연주', insta:'@yeondoo._.yam',  done:true,  views:0, m:{r1:true, r2:false,r3:false,r4:false,acut:false, f1:true,  keep:false, f2:false}},
+  {id:'y._.jj',         name:'신연주', insta:'@y._.jj',         done:true,  views:0, m:{r1:false,r2:true, r3:false,r4:false,acut:false, f1:false, keep:false, f2:false}},
+  {id:'warm_trip_days', name:'손정윤', insta:'@warm_trip_days', done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:false,acut:false, f1:false, keep:false, f2:false}},
+  {id:'ori.qqqq',       name:'김민지', insta:'@ori.qqqq',       done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'p__trend',       name:'정진우', insta:'@P__trend',       done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:false,acut:false, f1:true,  keep:false, f2:false}},
+  {id:'aqu_a_qua',      name:'권나현', insta:'@aqu_a_qua',      done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
 ];
 const WHITE_TEAM = [
-  {id:'onestar_3910',  insta:'@onestar_3910',  done:false, views:0},
-  {id:'kang.min.joo',  insta:'@kang.min.joo',  done:false, views:0},
-  {id:'huxxely_',      insta:'@huxxely_',      done:false, views:0},
-  {id:'chanbbo_',      insta:'@chanbbo_',      done:false, views:0},
-  {id:'bin___0812',    insta:'@bin___0812',    done:false, views:0},
-  {id:'s_in__p',       insta:'@s_in__p',       done:false, views:0},
-  {id:'hamsxg',        insta:'@hamsxg',        done:false, views:0},
-  {id:'yumini.ne',     insta:'@yumini.ne',     done:false, views:0},
+  {id:'onestar_3910',  name:'황유선', insta:'@onestar_3910',  done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'kang.min.joo',  name:'강민주', insta:'@kang.min.joo',  done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'huxxely_',      name:'허정연', insta:'@huxxely_',      done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'chanbbo_',      name:'성유리', insta:'@chanbbo_',      done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'bin___0812',    name:'강수빈', insta:'@bin___0812',    done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:false,acut:false, f1:true,  keep:false, f2:false}},
+  {id:'s_in__p',       name:'박수인', insta:'@s_in__p',       done:false, views:0, m:{r1:false,r2:false,r3:false,r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'hamsxg',        name:'함승현', insta:'@hamsxg',        done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:true, acut:false, f1:true,  keep:false, f2:false}},
+  {id:'yumini.ne',     name:'이지은', insta:'@yumini.ne',     done:true,  views:0, m:{r1:true, r2:true, r3:true, r4:false,acut:false, f1:false, keep:false, f2:false}},
 ];
 
 // 수동 업데이트 (현황판)
 const SCORE = { black:0, white:0 };
-const GALLERY_DATA = []; // 릴스 올라오면 채움
+const GALLERY_DATA = [
+  {id:'릴스 1', url:'https://www.instagram.com/reel/DZJb46nTeVs/', team:'black', views:0},
+  {id:'릴스 2', url:'https://www.instagram.com/reel/DZKOqAzJQB5/', team:'black', views:0},
+  {id:'릴스 3', url:'https://www.instagram.com/reel/DZFQSEMS3ml/', team:'black', views:0},
+  {id:'릴스 4', url:'https://www.instagram.com/reel/DZB4Eh3y6G1/', team:'black', views:0},
+  {id:'릴스 5', url:'https://www.instagram.com/reel/DY9zhT6SyBV/', team:'black', views:0},
+  {id:'릴스 6', url:'https://www.instagram.com/reel/DY4TAAty_xp/', team:'white', views:0},
+  {id:'릴스 7', url:'https://www.instagram.com/reel/DYzSd_kCCye/', team:'white', views:0},
+  {id:'릴스 8', url:'https://www.instagram.com/reel/DYr3TKyzANl/', team:'white', views:0},
+  {id:'릴스 9', url:'https://www.instagram.com/reel/DYucCIcgwQp/', team:'white', views:0},
+  {id:'릴스 10', url:'https://www.instagram.com/reel/DYrvXOAOfm8/', team:'white', views:0},
+  {id:'릴스 11', url:'https://www.instagram.com/reel/DYl_Ui-yn9W/', team:'white', views:0},
+  {id:'릴스 12', url:'https://www.instagram.com/reel/DYmAIm_B94C/', team:'white', views:0},
+  {id:'릴스 13', url:'https://www.instagram.com/reel/DYZGrTghDF1/', team:'white', views:0},
+];
 
 function fmt(n) {
   if(n>=10000) return (n/10000).toFixed(1)+'만';
@@ -1997,6 +2012,7 @@ function updateScoreboard() {
 updateScoreboard();
 
 // ── 미션 테이블 ──
+function ck(v) { return v ? '<span class="check-done">O</span>' : '<span class="check-pending">—</span>'; }
 function renderMissionTable() {
   const tbody = document.getElementById('mission-tbody');
   const all = [
@@ -2005,15 +2021,17 @@ function renderMissionTable() {
   ];
   tbody.innerHTML = all.map(m=>`
     <tr>
+      <td style="color:var(--white);font-weight:500;">${m.name}</td>
       <td>${m.insta}</td>
-      <td><span class="rank-badge ${m.team.toLowerCase()}">${m.team}</span></td>
-      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
-      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
-      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
-      <td class="${m.done?'check-done':'check-pending'}">${m.done?'✓':'·'}</td>
-      <td class="check-pending">·</td>
-      <td class="check-pending">·</td>
-      <td class="mission-views">${m.views>0?m.views.toLocaleString():'—'}</td>
+      <td><span class="rank-badge ${m.team.toLowerCase()}">${m.team==='BLACK'?'흑팀':'백팀'}</span></td>
+      <td>${ck(m.m.r1)}</td>
+      <td>${ck(m.m.r2)}</td>
+      <td>${ck(m.m.r3)}</td>
+      <td>${ck(m.m.r4)}</td>
+      <td>${ck(m.m.acut)}</td>
+      <td>${ck(m.m.f1)}</td>
+      <td>${ck(m.m.keep)}</td>
+      <td>${ck(m.m.f2)}</td>
     </tr>`).join('');
 }
 renderMissionTable();
@@ -2028,12 +2046,11 @@ function renderGallery(filter='all') {
   }
   grid.innerHTML = filtered.map(g=>`
     <a href="${g.url}" target="_blank" class="gallery-card" data-team="${g.team}">
-      <div class="gallery-thumb-placeholder">▶</div>
+      <div class="gallery-thumb-placeholder" style="font-size:36px;">▶</div>
       <div class="gallery-team-dot ${g.team}"></div>
-      <div class="gallery-play">▶</div>
       <div class="gallery-info">
         <span class="gallery-id">${g.id}</span>
-        <span class="gallery-views">${g.views.toLocaleString()}</span>
+        <span style="font-family:var(--sans);font-size:11px;letter-spacing:0.1em;color:var(--gold);display:block;margin-top:4px;">Instagram Reels →</span>
       </div>
     </a>`).join('');
 }
@@ -2235,6 +2252,7 @@ async function fetchSheetData() {
     updateScoreboard();
     renderMissionTable();
     updateRanking();
+    
 
   } catch(e) {
     console.log('시트 연동 오류:', e);
